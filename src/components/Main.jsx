@@ -16,8 +16,6 @@ const StyledMainContainer = Styled.div`
     width: 100%;
     height: 100%;
 
-    margin: 10px;
-
     * {
         font-family: "ABeeZee";
         color: rgba(0, 0, 0, 0.6);
@@ -39,7 +37,7 @@ const StyledTopBar = Styled.div`
 
 const StyledMidContainer = Styled.div`
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: center;
     flex-direction: column;
 
@@ -83,7 +81,7 @@ const Main = () => {
                 <Text fontSize={themes.fonts.size.title}>
                     Os Lupi de Portugal
                 </Text>
-                <Text fontSize={themes.fonts.size.title_two} maxWidth={600}>
+                <Text fontSize={themes.fonts.size.title_three} maxWidth={600}>
                     LUPI - Apelido Italiano que já existia em Portugal no século
                     XVIII, pertencente a uma nobre família de Itália, natural de
                     San Gimigliano. A linhagem dos Lupi tem antigas origens
@@ -91,8 +89,8 @@ const Main = () => {
                     Oriental em 950. <Link href={''}>Ler história...</Link>
                 </Text>
                 <CardContainer>
-                    {members.map((m) => (
-                        <Card key={m.id} member={m} marginRight={20} />
+                    {members.map((m, index) => (
+                        <Card key={index} member={m} marginRight={20} />
                     ))}
                 </CardContainer>
             </StyledMidContainer>

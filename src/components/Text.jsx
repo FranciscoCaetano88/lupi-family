@@ -1,13 +1,15 @@
 import { Styled } from '../react/index';
 
-const StyledTitle = Styled.text`
-    text-align: center;
+const StyledText = Styled.div`
+    text-align: ${(props) => props.align || 'center'};
     font-size: ${(props) => props.fontSize}px;
-    font-weight: 600;
+    font-weight: 500;
+    ${(props) =>
+        props.lineHeight ? `line-height: ${props.lineHeight}px;` : ''}
 
-    max-width: ${(props) => props.maxWidth}px;
+    ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth}px;` : '')}
 
     margin-bottom: 10px;
 `;
 
-export default StyledTitle;
+export default StyledText;

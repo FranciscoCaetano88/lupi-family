@@ -10,6 +10,8 @@ const StyledPortrait = Styled.img`
     border: 1px solid black;
 
     margin-bottom: ${(props) => props.marginBottom}px;
+
+    user-select: none;
 `;
 
 export default StyledPortrait;

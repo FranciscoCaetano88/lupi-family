@@ -10,19 +10,16 @@ const StyledCard = Styled.div`
     align-items: center;
     flex-direction: column;
 
-    width: fit-content;
-    height: fit-content;
-
     padding: 10px;
 
     margin-right: ${(props) => props.marginRight}px;
 
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 14px;
 
     &:hover {
         transition: 0.2s ease-in;
-        box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.2);
+        box-shadow: 5px 5px 14px rgba(0, 0, 0, 0.4);
     }
 
     transition: all 0.2s ease-out;
@@ -41,7 +38,7 @@ const Card = ({ member, ...restProps }) => {
             {...restProps}
         >
             <Portrait src={portraits[id]} marginBottom={5} />
-            <Text fontSize={themes.fonts.size.title_two}>
+            <Text fontSize={themes.fonts.size.title_three}>
                 {name}
                 <br />({birth}-{death})
             </Text>

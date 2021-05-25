@@ -2,8 +2,9 @@ import { Styled } from '../react/index';
 
 const StyledPortrait = Styled.img`
     width: 200px;
-    min-width: 62px;
     height: 200px;
+
+    min-width: 62px;
     min-height: 62px;
 
     border-radius: 100%;

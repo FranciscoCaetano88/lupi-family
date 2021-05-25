@@ -53,6 +53,10 @@ const StyledTop = Styled.div`
 
 const StyledSeparator = Styled.hr`
     width: 80%;
+
+    margin-block-start: 0;
+    margin-block-end: 0;
+    
     border: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
@@ -61,6 +65,7 @@ const StyledTr = Styled.tr`
 `;
 
 const StyledTdTitle = Styled.td`
+    font-size: ${themes.fonts.size.normal};
     vertical-align: top;
     text-align: ${(props) => props.textAlign || 'right'};
     font-weight: bold;
@@ -69,6 +74,7 @@ const StyledTdTitle = Styled.td`
 `;
 
 const StyledTdContent = Styled.td`
+    font-size: ${themes.fonts.size.normal};
     text-align: ${(props) => props.textAlign || 'left'};
     width: 50%;
 `;
@@ -97,7 +103,7 @@ const LeftSection = ({ member }) => {
             <Portrait src={portraits[id]} marginBottom={5} />
             <Text fontSize={themes.fonts.size.title_two}>{name}</Text>
             <StyledSeparator />
-            <table>
+            <table style={{ padding: '20px' }}>
                 <tbody>
                     <StyledTr>
                         <StyledTdTitle>Data Nascimento</StyledTdTitle>
@@ -149,23 +155,22 @@ const StyledRightSection = Styled.div`
 
     width: 100%;
     height: 100%;
+
+    overflow: scroll;
 `;
 
 const StyledBiography = Styled.div`
     width: 100%;
-    max-width: 600px;
-
-    margin-top: 64px;
-    margin-bottom: 64px;
 `;
 
-const StyledContent = Styled.div`
-    width: 100%;
+const StyledContainerBoth = Styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: auto;
     height: 100%;
 
-    padding: 20px;
-
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 64px;
 `;
 
 const StyledColumn = Styled.div`
@@ -173,6 +178,7 @@ const StyledColumn = Styled.div`
     justify-content: center;
     align-items: center;
 
+    font-size: ${themes.fonts.size.normal};
     float: left;
     width: ${(props) => props.cols};
 `;
@@ -191,59 +197,74 @@ const RightSection = ({ member }) => {
 
     return (
         <StyledRightSection>
-            <StyledBiography>
-                <div>
-                    <Text align={'left'} fontSize={themes.fonts.size.title_two}>
-                        Biografia
-                    </Text>
-                    <StyledContent>
+            <StyledContainerBoth>
+                <StyledBiography>
+                    <div>
                         <Text
-                            lineHeight={25}
                             align={'left'}
-                            fontSize={themes.fonts.size.normal}
+                            fontSize={themes.fonts.size.title_two}
                         >
-                            {parseText(biography, splitter, transform)}
+                            Biografia
                         </Text>
-                    </StyledContent>
-                </div>
-            </StyledBiography>
-            <StyledBiography>
-                <div>
-                    <Text align={'left'} fontSize={themes.fonts.size.title_two}>
-                        Eventos Importantes
-                    </Text>
-                    <StyledContent>
-                        <StyledRow>
-                            {Object.keys(events).map((key) => (
-                                <StyledColumn
-                                    cols={`${
-                                        100 / Object.keys(events).length
-                                    }%`}
-                                    key={`${key}-title`}
-                                >
-                                    {key}
-                                </StyledColumn>
-                            ))}
-                        </StyledRow>
-                        <StyledRow>
-                            {Object.keys(events).map((key) => (
-                                <StyledColumn
-                                    cols={`${
-                                        100 / Object.keys(events).length
-                                    }%`}
-                                    key={`${key}-content`}
-                                >
-                                    {parseText(
-                                        events[key],
-                                        splitter,
-                                        transform
-                                    )}
-                                </StyledColumn>
-                            ))}
-                        </StyledRow>
-                    </StyledContent>
-                </div>
-            </StyledBiography>
+                        <div>
+                            <Text
+                                lineHeight={25}
+                                align={'left'}
+                                fontSize={themes.fonts.size.normal}
+                                border={'1px solid rgba(0, 0, 0, 0.2)'}
+                                padding={'20px'}
+                            >
+                                {parseText(biography, splitter, transform)}
+                            </Text>
+                        </div>
+                    </div>
+                </StyledBiography>
+                <StyledBiography>
+                    <div>
+                        <Text
+                            align={'left'}
+                            fontSize={themes.fonts.size.title_two}
+                        >
+                            Eventos Importantes
+                        </Text>
+                        <div
+                            style={{
+                                border: '1px solid rgba(0, 0, 0, 0.2)',
+                                padding: '20px',
+                            }}
+                        >
+                            <StyledRow>
+                                {Object.keys(events).map((key) => (
+                                    <StyledColumn
+                                        cols={`${
+                                            100 / Object.keys(events).length
+                                        }%`}
+                                        key={`${key}-title`}
+                                    >
+                                        {key}
+                                    </StyledColumn>
+                                ))}
+                            </StyledRow>
+                            <StyledRow>
+                                {Object.keys(events).map((key) => (
+                                    <StyledColumn
+                                        cols={`${
+                                            100 / Object.keys(events).length
+                                        }%`}
+                                        key={`${key}-content`}
+                                    >
+                                        {parseText(
+                                            events[key],
+                                            splitter,
+                                            transform
+                                        )}
+                                    </StyledColumn>
+                                ))}
+                            </StyledRow>
+                        </div>
+                    </div>
+                </StyledBiography>
+            </StyledContainerBoth>
         </StyledRightSection>
     );
 };

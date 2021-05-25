@@ -1,4 +1,4 @@
-import { React, Styled } from '../react/index';
+import { React, Styled, Router } from '../react/index';
 import Text from './Text.jsx';
 import Link from './Link.jsx';
 import BackArrow from './BackArrow.jsx';
@@ -6,6 +6,9 @@ import themes from './themes';
 import images from '../assets/images';
 import { COMPONENT_TYPES } from '../enums';
 import { parseText } from '../utils';
+import stories from '../assets/stories';
+
+const { useHistory, useLocation } = Router;
 
 const StyledMainContainer = Styled.div`
     display: flex;
@@ -48,25 +51,27 @@ const TextContainer = Styled.div`
     padding: 20px;
 `;
 
-const Story = ({ story }) => {
-    const splitter = /({{.+?}})/;
+const Story = () => {
+    const history = useHistory();
+    const location = useLocation();
+
+    const id = location.pathname.split('/').filter((s) => s)[1];
+    const story = stories.find((s) => s.id === id);
     const { title, description } = story;
+    const splitter = /({{.+?}})/;
 
     return (
         <StyledMainContainer>
             <StyledTop>
-                <BackArrow
-                    margin={20}
-                    onClick={() => console.log('GO TO PREVIOUS ROUTE')}
-                />
+                <BackArrow margin={20} onClick={() => history.goBack()} />
             </StyledTop>
             <StyledMidContainer>
                 <TextContainer>
                     <Text fontSize={themes.fonts.size.title}>
-                        {parseText(title, splitter, transform)}
+                        {parseText(title, splitter, transform(history))}
                     </Text>
                     <Text fontSize={themes.fonts.size.normal}>
-                        {parseText(description, splitter, transform)}
+                        {parseText(description, splitter, transform(history))}
                     </Text>
                 </TextContainer>
             </StyledMidContainer>
@@ -76,15 +81,21 @@ const Story = ({ story }) => {
 
 export default Story;
 
-function transform(string) {
-    const [type, path, name] = string.replace(/{{|}}/g, '').split('|');
-    if (type === COMPONENT_TYPES.image) {
-        return <img src={images[path]} alt={name} />;
-    }
+function transform(history) {
+    return (string) => {
+        const [type, path, name] = string.replace(/{{|}}/g, '').split('|');
+        if (type === COMPONENT_TYPES.image) {
+            return <img key={name} src={images[path]} alt={name} />;
+        }
 
-    if (type === COMPONENT_TYPES.link) {
-        return <Link href={path}>{name}</Link>;
-    }
+        if (type === COMPONENT_TYPES.link) {
+            return (
+                <Link key={name} onClick={() => history.push(path)}>
+                    {name}
+                </Link>
+            );
+        }
 
-    return string;
+        return string;
+    };
 }

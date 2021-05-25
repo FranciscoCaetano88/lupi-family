@@ -13,7 +13,6 @@ const StyledButton = Styled.div`
     margin-right: 20px;
     padding: 5px 30px 5px 30px;
 
-    border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 32px;
 
     cursor: pointer;

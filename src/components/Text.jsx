@@ -8,6 +8,8 @@ const StyledText = Styled.div`
         props.lineHeight ? `line-height: ${props.lineHeight}px;` : ''}
 
     ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth}px;` : '')}
+    ${(props) => (props.border ? `border: ${props.border};` : '')}
+    ${(props) => (props.padding ? `padding: ${props.padding};` : '')}
 
     margin-bottom: 10px;
 `;

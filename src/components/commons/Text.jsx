@@ -1,4 +1,4 @@
-import { Styled } from '../react/index';
+import { Styled } from '../../react';
 
 const StyledText = Styled.div`
     text-align: ${(props) => props.align || 'center'};

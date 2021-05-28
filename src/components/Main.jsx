@@ -1,8 +1,9 @@
 import { React, Styled, Router } from '../react';
-import Button from './Button.jsx';
-import Text from './Text.jsx';
-import Link from './Link.jsx';
-import Card from './Card.jsx';
+import Navbar from './commons/Navbar.jsx';
+import Footer from './commons/Footer.jsx';
+import Text from './commons/Text.jsx';
+import Link from './commons/Link.jsx';
+import Card from './commons/Card.jsx';
 import members from '../assets/members';
 import themes from './themes';
 
@@ -23,19 +24,8 @@ const StyledMainContainer = Styled.div`
         font-family: "ABeeZee";
         color: rgba(0, 0, 0, 0.6);
     }
-`;
 
-const StyledTopBar = Styled.div`
-    position: sticky;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-    height: fit-content;
-
-    padding: 10px;
+    overflow: hidden;
 `;
 
 const StyledMidContainer = Styled.div`
@@ -46,15 +36,6 @@ const StyledMidContainer = Styled.div`
 
     width: 100%;
     height: 100%;
-`;
-
-const StyledFooter = Styled.div`
-    display: flex;
-
-    width: 100%;
-    height: 100%;
-
-    background-color: #fafafa;
 `;
 
 const CardContainer = Styled.div`
@@ -68,38 +49,35 @@ const CardContainer = Styled.div`
 const Main = () => {
     const history = useHistory();
 
-    const goToPath = function (path) {
-        return () => history.push(path);
-    };
-
     return (
         <StyledMainContainer>
-            <StyledTopBar>
-                <Button onClick={goToPath('/')}>Página Inicial</Button>
-                <Button onClick={goToPath('/family')}>A Família</Button>
-                <Button onClick={goToPath('/stories')}>A História</Button>
-            </StyledTopBar>
+            <Navbar />
             <StyledMidContainer>
                 <Text fontSize={themes.fonts.size.title}>
                     Os Lupi de Portugal
                 </Text>
-                <Text fontSize={themes.fonts.size.title_three} maxWidth={600}>
+                <Text fontSize={themes.fonts.size.title_three} maxWidth={700}>
                     LUPI - Apelido Italiano que já existia em Portugal no século
                     XVIII, pertencente a uma nobre família de Itália, natural de
                     San Gimigliano. A linhagem dos Lupi tem antigas origens
                     históricas, descendendo de Alberto, 1º Marquês da Ligúria
                     Oriental em 950.{' '}
-                    <Link onClick={goToPath('/story/story-1')}>
+                    <Link onClick={() => history.push('/story/story-1')}>
                         Ler história...
                     </Link>
                 </Text>
                 <CardContainer>
                     {members.map((m, index) => (
-                        <Card key={index} member={m} marginRight={20} />
+                        <Card
+                            key={index}
+                            member={m}
+                            marginRight={20}
+                            onClick={() => history.push(`family/${m.id}`)}
+                        />
                     ))}
                 </CardContainer>
             </StyledMidContainer>
-            <StyledFooter></StyledFooter>
+            <Footer />
         </StyledMainContainer>
     );
 };

@@ -1,8 +1,8 @@
-import { React, Styled } from '../react/index';
+import { React, Styled } from '../../react';
 import Text from './Text.jsx';
 import Portrait from './Portrait.jsx';
-import { portraits } from '../assets/images';
-import themes from './themes';
+import { portraits } from '../../assets/images';
+import themes from '../themes';
 
 const StyledCard = Styled.div`
     display: flex;
@@ -29,14 +29,11 @@ const StyledCard = Styled.div`
     user-select: none;
 `;
 
-const Card = ({ member, ...restProps }) => {
+const Card = ({ member, onClick, ...restProps }) => {
     const { id, name, birth, death } = member;
 
     return (
-        <StyledCard
-            onClick={() => console.log('PRESSED CARD: ', name)}
-            {...restProps}
-        >
+        <StyledCard onClick={onClick} {...restProps}>
             <Portrait src={portraits[id]} marginBottom={5} />
             <Text fontSize={themes.fonts.size.title_three}>
                 {name}

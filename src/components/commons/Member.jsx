@@ -1,13 +1,15 @@
-import { React, Styled } from '../react/index';
+import { React, Styled, Router } from '../../react';
 import Text from './Text.jsx';
 import Link from './Link.jsx';
 import Portrait from './Portrait.jsx';
 import BackArrow from './BackArrow.jsx';
-import { portraits } from '../assets/images';
-import themes from './themes';
-import { parseText } from '../utils';
-import images from '../assets/images';
-import { COMPONENT_TYPES } from '../enums';
+import { portraits } from '../../assets/images';
+import themes from '../themes';
+import { parseText } from '../../utils';
+import images from '../../assets/images';
+import { COMPONENT_TYPES } from '../../enums';
+
+const { useHistory } = Router;
 
 const StyledContainer = Styled.div`
     display: flex;
@@ -80,6 +82,7 @@ const StyledTdContent = Styled.td`
 `;
 
 const LeftSection = ({ member }) => {
+    const history = useHistory();
     const {
         id,
         name,
@@ -95,10 +98,7 @@ const LeftSection = ({ member }) => {
     return (
         <StyledLeftSection>
             <StyledTop>
-                <BackArrow
-                    margin={20}
-                    onClick={() => console.log('GO TO PREVIOUS ROUTE')}
-                />
+                <BackArrow margin={20} onClick={() => history.goBack()} />
             </StyledTop>
             <Portrait src={portraits[id]} marginBottom={5} />
             <Text fontSize={themes.fonts.size.title_two}>{name}</Text>

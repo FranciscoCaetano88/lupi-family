@@ -1,4 +1,4 @@
-import { Styled } from '../react/index';
+import { Styled } from '../../react';
 
 const StyledPortrait = Styled.img`
     width: 200px;

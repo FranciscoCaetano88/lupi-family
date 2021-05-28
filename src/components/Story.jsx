@@ -1,14 +1,13 @@
 import { React, Styled, Router } from '../react/index';
-import Text from './Text.jsx';
-import Link from './Link.jsx';
-import BackArrow from './BackArrow.jsx';
+import Text from './commons/Text.jsx';
+import Link from './commons/Link.jsx';
+import BackArrow from './commons/BackArrow.jsx';
 import themes from './themes';
 import images from '../assets/images';
 import { COMPONENT_TYPES } from '../enums';
 import { parseText } from '../utils';
-import stories from '../assets/stories';
 
-const { useHistory, useLocation } = Router;
+const { useHistory } = Router;
 
 const StyledMainContainer = Styled.div`
     display: flex;
@@ -51,14 +50,10 @@ const TextContainer = Styled.div`
     padding: 20px;
 `;
 
-const Story = () => {
+const Story = ({ story }) => {
     const history = useHistory();
-    const location = useLocation();
-
-    const id = location.pathname.split('/').filter((s) => s)[1];
-    const story = stories.find((s) => s.id === id);
-    const { title, description } = story;
     const splitter = /({{.+?}})/;
+    const { title, description } = story;
 
     return (
         <StyledMainContainer>

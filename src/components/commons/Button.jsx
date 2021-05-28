@@ -1,4 +1,4 @@
-import { Styled } from '../react/index';
+import { Styled } from '../../react';
 
 const StyledButton = Styled.div`
     display: flex;

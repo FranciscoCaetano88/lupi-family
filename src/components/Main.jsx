@@ -67,10 +67,10 @@ const Main = () => {
                     </Link>
                 </Text>
                 <CardContainer>
-                    {members.map((m, index) => (
+                    {[members[0], members[1]].map((m, index) => (
                         <Card
                             key={index}
-                            member={m}
+                            info={m}
                             marginRight={20}
                             onClick={() => history.push(`family/${m.id}`)}
                         />

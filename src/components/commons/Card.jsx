@@ -6,16 +6,22 @@ import themes from '../themes';
 
 const StyledCard = Styled.div`
     display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
 
+    max-width: 230px;
+    max-height: 260px;
     padding: 10px;
 
     margin-right: ${(props) => props.marginRight}px;
 
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 14px;
+
+    background-color: white;
 
     &:hover {
         transition: 0.2s ease-in;
@@ -29,8 +35,8 @@ const StyledCard = Styled.div`
     user-select: none;
 `;
 
-const Card = ({ member, onClick, ...restProps }) => {
-    const { id, name, birth, death } = member;
+const Card = ({ info, onClick, ...restProps }) => {
+    const { id, name, birth, death } = info;
 
     return (
         <StyledCard onClick={onClick} {...restProps}>

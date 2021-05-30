@@ -1,6 +1,6 @@
 # Lupi Family
 
-This project is purely informative about the history of the Lupi Family.
+The history of Lupi's from Portugal.
 
 ## Installation
 
@@ -12,9 +12,11 @@ For Mac users run in the terminal:
 * install latest version of node<br />
 ```nvm install --lts```
 
-on the root folder of the project run in the terminal:<br />
-* install, build and run the project<br />
-```npm i; npm run build; npm run dev```
+on the root folder of the project, run in the terminal:<br />
+* install dependencies<br />
+```npm i```<br />
+* build and start dev environment<br />
+```npm run dev```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

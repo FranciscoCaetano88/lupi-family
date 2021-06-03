@@ -1,35 +1,29 @@
 import { React, Styled, Router } from '../../react';
-import Text from './Text.jsx';
+
+import Page from './Page.jsx';
 import Link from './Link.jsx';
 import Portrait from './Portrait.jsx';
-import BackArrow from './BackArrow.jsx';
-import { portraits } from '../../assets/images';
-import themes from '../themes';
+
 import { parseText } from '../../utils';
-import images from '../../assets/images';
+import { portraits } from '../../assets/images';
 import { COMPONENT_TYPES } from '../../enums';
 
 const { useHistory } = Router;
 
-const StyledContainer = Styled.div`
+const StyledSection = Styled.section`
     display: flex;
-    align-items: center;
-
-    width: 100%;
-    height: 100%;
-
-    * {
-        font-family: "ABeeZee";
-        color: rgba(0, 0, 0, 0.6);
-    }
+    flex-direction: column;
 `;
 
 const Member = ({ member }) => {
+    const history = useHistory();
     return (
-        <StyledContainer>
-            <LeftSection member={member} />
-            <RightSection member={member} />
-        </StyledContainer>
+        <Page>
+            <StyledSection>
+                <LeftSection history={history} member={member} />
+                <RightSection history={history} member={member} />
+            </StyledSection>
+        </Page>
     );
 };
 
@@ -37,20 +31,13 @@ export default Member;
 
 const StyledLeftSection = Styled.div`
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    min-width: 40%;
-    height: 100%;
+    flex-basis: 100%;
 
-    background-color: ${themes.colors.background};
-`;
-
-const StyledTop = Styled.div`
-    display: flex;
-
-    width: 100%;
+    margin-right: 1em;
 `;
 
 const StyledSeparator = Styled.hr`
@@ -62,226 +49,132 @@ const StyledSeparator = Styled.hr`
     border: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
-const StyledTr = Styled.tr`
-    font-size: ${themes.fonts.size.title_three}px;
+const StyledPortrait = Styled(Portrait)`
+    margin-bottom: 1em;
 `;
 
-const StyledTdTitle = Styled.td`
-    font-size: ${themes.fonts.size.normal};
-    vertical-align: top;
-    text-align: ${(props) => props.textAlign || 'right'};
-    font-weight: bold;
-    width: 50%;
-    padding-right: 20px;
+const StyledInfoSection = Styled.div`
+    display: flex;
 `;
 
-const StyledTdContent = Styled.td`
-    font-size: ${themes.fonts.size.normal};
-    text-align: ${(props) => props.textAlign || 'left'};
-    width: 50%;
+const StyledInfo = Styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: ${(props) => props.alignItems};
+    flex-basis: 100%;
+
+    padding: 0.4em;
+
+    & > p {
+        font-weight: ${(props) => (props.bold ? 600 : '')};
+        margin: 0 !important;
+    }
 `;
 
-const LeftSection = ({ member }) => {
-    const history = useHistory();
-    const {
-        id,
-        name,
-        birth,
-        death,
-        gender,
-        parents,
-        spouses,
-        children,
-        siblings,
-    } = member;
+const LeftSection = ({ member, history }) => {
+    const { id, name, birth, death, parents, spouses, children, siblings } =
+        member;
 
     return (
         <StyledLeftSection>
-            <StyledTop>
-                <BackArrow margin={20} onClick={() => history.goBack()} />
-            </StyledTop>
-            <Portrait src={portraits[id]} marginBottom={5} />
-            <Text fontSize={themes.fonts.size.title_two}>{name}</Text>
+            <StyledPortrait src={portraits[id]} />
+            <h1>{name}</h1>
             <StyledSeparator />
-            <table style={{ padding: '20px' }}>
-                <tbody>
-                    <StyledTr>
-                        <StyledTdTitle>Data Nascimento</StyledTdTitle>
-                        <StyledTdContent>{birth}</StyledTdContent>
-                    </StyledTr>
-                    <StyledTr>
-                        <StyledTdTitle>Data Óbito</StyledTdTitle>
-                        <StyledTdContent>{death}</StyledTdContent>
-                    </StyledTr>
-                    <StyledTr>
-                        <StyledTdTitle>Género</StyledTdTitle>
-                        <StyledTdContent>{gender}</StyledTdContent>
-                    </StyledTr>
-                    <StyledTr>
-                        <StyledTdTitle>Pais</StyledTdTitle>
-                        <StyledTdContent>
-                            {parents.map((p) => p.id).join(', ')}
-                        </StyledTdContent>
-                    </StyledTr>
-                    <StyledTr>
-                        <StyledTdTitle>Esposos</StyledTdTitle>
-                        <StyledTdContent>
-                            {spouses.map((s) => s.id).join(', ')}
-                        </StyledTdContent>
-                    </StyledTr>
-                    <StyledTr>
-                        <StyledTdTitle>Filhos</StyledTdTitle>
-                        <StyledTdContent>
-                            {children.map((c) => c.id).join(', ')}
-                        </StyledTdContent>
-                    </StyledTr>
-                    <StyledTr>
-                        <StyledTdTitle>Irmãos</StyledTdTitle>
-                        <StyledTdContent>
-                            {siblings.map((s) => s.id).join(', ')}
-                        </StyledTdContent>
-                    </StyledTr>
-                </tbody>
-            </table>
+            <StyledInfoSection>
+                <StyledInfo alignItems={'flex-end'} bold={true}>
+                    <p>Data Nascimento</p>
+                    <p>Data Óbito</p>
+                    <p>Pais</p>
+                    <p>Esposos</p>
+                    <p>Filhos</p>
+                    <p>Irmãos</p>
+                </StyledInfo>
+                <StyledInfo>
+                    <p>{birth}</p>
+                    <p>{death}</p>
+                    <p>{parents.map((p) => p.id).join(', ')}</p>
+                    <p>{spouses.map((s) => s.id).join(', ')}</p>
+                    <p>{children.map((c) => c.id).join(', ')}</p>
+                    <p>{siblings.map((s) => s.id).join(', ')}</p>
+                </StyledInfo>
+            </StyledInfoSection>
         </StyledLeftSection>
     );
 };
 
 const StyledRightSection = Styled.div`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-
-    width: 100%;
-    height: 100%;
-
-    overflow: scroll;
-`;
-
-const StyledBiography = Styled.div`
-    width: 100%;
-`;
-
-const StyledContainerBoth = Styled.div`
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: auto;
-    height: 100%;
 
-    padding: 64px;
+    flex-basis: 100%;
 `;
 
 const StyledColumn = Styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex-basis: 100%;
 
-    font-size: ${themes.fonts.size.normal};
+    font-size: 0.7em;
     float: left;
-    width: ${(props) => props.cols};
 `;
 
 const StyledRow = Styled.div`
-    &:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
+    display: flex;
 `;
 
-const RightSection = ({ member }) => {
+const StyledTable = Styled.div`
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 1em;
+`;
+
+const StyledColumnParagraph = Styled.p`
+    margin: 0 !important;
+`;
+
+const RightSection = ({ member, history }) => {
     const splitter = /({{.+?}})/;
     const { biography, events } = member;
 
     return (
         <StyledRightSection>
-            <StyledContainerBoth>
-                <StyledBiography>
-                    <div>
-                        <Text
-                            align={'left'}
-                            fontSize={themes.fonts.size.title_two}
-                        >
-                            Biografia
-                        </Text>
-                        <div>
-                            <Text
-                                lineHeight={25}
-                                align={'left'}
-                                fontSize={themes.fonts.size.normal}
-                                border={'1px solid rgba(0, 0, 0, 0.2)'}
-                                padding={'20px'}
-                            >
-                                {parseText(biography, splitter, transform)}
-                            </Text>
-                        </div>
-                    </div>
-                </StyledBiography>
-                <StyledBiography>
-                    <div>
-                        <Text
-                            align={'left'}
-                            fontSize={themes.fonts.size.title_two}
-                        >
-                            Eventos Importantes
-                        </Text>
-                        <div
-                            style={{
-                                border: '1px solid rgba(0, 0, 0, 0.2)',
-                                padding: '20px',
-                            }}
-                        >
-                            <StyledRow>
-                                {Object.keys(events).map((key) => (
-                                    <StyledColumn
-                                        cols={`${
-                                            100 / Object.keys(events).length
-                                        }%`}
-                                        key={`${key}-title`}
-                                    >
-                                        {key}
-                                    </StyledColumn>
-                                ))}
-                            </StyledRow>
-                            <StyledRow>
-                                {Object.keys(events).map((key) => (
-                                    <StyledColumn
-                                        cols={`${
-                                            100 / Object.keys(events).length
-                                        }%`}
-                                        key={`${key}-content`}
-                                    >
-                                        {parseText(
-                                            events[key],
-                                            splitter,
-                                            transform
-                                        )}
-                                    </StyledColumn>
-                                ))}
-                            </StyledRow>
-                        </div>
-                    </div>
-                </StyledBiography>
-            </StyledContainerBoth>
+            <h1>Biografia</h1>
+            <p>{parseText(biography, splitter, transform(history))}</p>
+            <h1>Eventos Importantes</h1>
+            <StyledTable>
+                <StyledRow>
+                    {Object.keys(events).map((key) => (
+                        <StyledColumn key={`${key}-title`}>
+                            <StyledColumnParagraph>{key}</StyledColumnParagraph>
+                            <StyledColumnParagraph>
+                                {parseText(
+                                    events[key],
+                                    splitter,
+                                    transform(history)
+                                )}
+                            </StyledColumnParagraph>
+                        </StyledColumn>
+                    ))}
+                </StyledRow>
+            </StyledTable>
         </StyledRightSection>
     );
 };
 
-function transform(string) {
-    const [type, path, name] = string.replace(/{{|}}/g, '').split('|');
-    if (type === COMPONENT_TYPES.image) {
-        return <img key={name} src={images[path]} alt={name} />;
-    }
+function transform(history) {
+    return (string) => {
+        const [type, path, name] = string.replace(/{{|}}/g, '').split('|');
 
-    if (type === COMPONENT_TYPES.link) {
-        return (
-            <Link key={name} href={path}>
-                {name}
-            </Link>
-        );
-    }
+        if (type === COMPONENT_TYPES.link) {
+            return (
+                <Link key={name} onClick={() => history.push(path)}>
+                    {name}
+                </Link>
+            );
+        }
 
-    return string;
+        return string;
+    };
 }

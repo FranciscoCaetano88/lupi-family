@@ -1,22 +1,15 @@
 import { React, Styled } from '../../react';
-import Text from './Text.jsx';
 import Portrait from './Portrait.jsx';
 import { portraits } from '../../assets/images';
-import themes from '../themes';
 
 const StyledCard = Styled.div`
     display: flex;
-    flex-grow: 1;
-    flex-shrink: 1;
-    justify-content: space-between;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 
-    max-width: 230px;
-    max-height: 260px;
-    padding: 10px;
-
-    margin-right: ${(props) => props.marginRight}px;
+    margin: 0.5em;
+    padding: 0.5rem;
 
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 14px;
@@ -35,16 +28,22 @@ const StyledCard = Styled.div`
     user-select: none;
 `;
 
+const StyledParagraph = Styled.p`
+    text-align: center;
+
+    margin: 0 !important;
+`;
+
 const Card = ({ info, onClick, ...restProps }) => {
     const { id, name, birth, death } = info;
 
     return (
         <StyledCard onClick={onClick} {...restProps}>
             <Portrait src={portraits[id]} marginBottom={5} />
-            <Text fontSize={themes.fonts.size.title_three}>
+            <StyledParagraph>
                 {name}
                 <br />({birth}-{death})
-            </Text>
+            </StyledParagraph>
         </StyledCard>
     );
 };

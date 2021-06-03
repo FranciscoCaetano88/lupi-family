@@ -8,12 +8,12 @@
     "spouses": [{ "id": "João Paulo Freire-id", "type": "married" }],
     "children": [],
     "siblings": [{ "id": "Raul Lupi Nogueira-id", "type": "blood" }],
-    "biography": "{{link|family/francisco-lupi|Francisco Lupi}} Amaia is a smart girl who are connected 24/7 on their phone and computer (she uses Macbook and iPhone). She has a healthy lifestyle with a vegetarian diet and eating BIO/Organic products every time she can. Is concerned about the environment and takes part to make the world a better place. She likes nature and love to do hiking, cycling and yoga.",
+    "biography": "{{link|/family/francisco-lupi|Francisco Lupi}} Amaia is a smart girl who are connected 24/7 on their phone and computer (she uses Macbook and iPhone). She has a healthy lifestyle with a vegetarian diet and eating BIO/Organic products every time she can. Is concerned about the environment and takes part to make the world a better place. She likes nature and love to do hiking, cycling and yoga.",
     "events": {
         "1860": "Nascimento",
-        "1865": "{{link|stories/story1|story1}}",
-        "1868": "{{link|stories/story2|story2}}",
-        "1869": "{{link|stories/story3|story3}}",
+        "1865": "{{link|/stories/story-1|story1}}",
+        "1868": "{{link|/stories/story-2|story2}}",
+        "1869": "{{link|/stories/story-3|story3}}",
         "1870": "Morte"
     }
 }

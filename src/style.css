@@ -1,8 +1,3 @@
-@font-face {
-    font-family: 'ABeeZee';
-    src:  url('assets/fonts/ABeeZee-Regular.ttf');
-}
-
 html {
     width: 100%;
     height: 100%;
@@ -13,10 +8,23 @@ html {
 body {
     width: 100%;
     height: 100%;
-    margin: 0;
 }
 
 #root {
     width: 100%;
     height: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }

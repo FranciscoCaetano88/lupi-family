@@ -1,31 +1,10 @@
 import { React, Styled, Router } from '../react/index';
-
-import Navbar from './commons/Navbar.jsx';
-import Footer from './commons/Footer.jsx';
-import Text from './commons/Text.jsx';
-
-import themes from './themes';
+import Page from './commons/Page.jsx';
 
 const { useHistory } = Router;
 
-const StyledStories = Styled.div`
-    display: flex;
-    flex-direction: column;
-
-    width: 100%;
-    height: 100%;
-
-    overflow: hidden;
-
-    * {
-        font-family: "ABeeZee";
-        color: rgba(0, 0, 0, 0.6);
-    }
-`;
-
 const StyledContent = Styled.div`
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
 
@@ -35,29 +14,29 @@ const StyledContent = Styled.div`
 
 const StyledNodesContainer = Styled.div`
     display: flex;
+
+    max-width: 24em;
+
+    border-radius: 1rem;
+    border: 1px solid black;
+
+    overflow-x: scroll;
 `;
 
 const Stories = ({ stories }) => {
     return (
-        <StyledStories>
-            <Navbar />
+        <Page>
             <StyledContent>
-                <Text fontSize={themes.fonts.size.title}>A História</Text>
+                <h1>A História</h1>
                 <StyledNodesContainer>
                     {stories
                         .sort((s1, s2) => s1.year - s2.year)
                         .map((s, index) => (
-                            <YearNode
-                                key={index}
-                                isStarting={index === 0}
-                                isLast={index === stories.length - 1}
-                                story={s}
-                            />
+                            <YearNode key={index} story={s} />
                         ))}
                 </StyledNodesContainer>
             </StyledContent>
-            <Footer />
-        </StyledStories>
+        </Page>
     );
 };
 
@@ -67,57 +46,40 @@ const StyledYearNode = Styled.div`
     position: relative;
 
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-    
-    width: 150px;
-    height: 150px;
+    justify-content: center;
+    flex-shrink: 0;
 
-    ${(props) => {
-        if (props.isLast) {
-            return `border-right: 1px solid black;
-                border-top: 1px solid black;
-                border-bottom: 1px solid black;
-                border-top-right-radius: 14px;
-                border-bottom-right-radius: 14px;`;
-        }
-
-        if (props.isStarting) {
-            return `border-left: 1px solid black;
-                border-top: 1px solid black;
-                border-bottom: 1px solid black;
-                border-top-left-radius: 14px;
-                border-bottom-left-radius: 14px;`;
-        }
-
-        return `border-top: 1px solid black;
-            border-bottom: 1px solid black;`;
-    }}
+    width: 8em;
+    height: 8em;
 
     cursor: pointer;
 
     &:hover {
-        background-color: rgba(0, 0, 0, 0.2);
+        background-color: rgba(0, 0, 0, 0.1);
     }
+
+    &:active {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    transition: all 0.2s ease-in;
 `;
 
-const StyledDrawingContainer = Styled.div`
-    position: absolute;
+const StyledParagraph = Styled.p`
+    margin: 0 !important;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-    height: 100%;
+    user-select: none;
 `;
 
 const StyledCircle = Styled.div`
     position: absolute;
 
-    width: 42px;
-    height: 42px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 2em;
+    height: 2em;
 
     border-radius: 100%;
 
@@ -125,27 +87,26 @@ const StyledCircle = Styled.div`
 `;
 
 const StyledLine = Styled.div`
+    position: absolute;
+
+    top: 50%;
+    transform: translateY(-50%);
+
     width: 100%;
-    height: 10px;
+    height: 0.5em;
 
     background-color: black;
 `;
 
-const YearNode = ({ story, isStarting, isLast }) => {
+const YearNode = ({ story }) => {
     const history = useHistory();
     const { id, year } = story;
 
     return (
-        <StyledYearNode
-            onClick={() => history.push(`story/${id}`)}
-            isStarting={isStarting}
-            isLast={isLast}
-        >
-            {year}
-            <StyledDrawingContainer>
-                <StyledCircle />
-                <StyledLine />
-            </StyledDrawingContainer>
+        <StyledYearNode onClick={() => history.push(`story/${id}`)}>
+            <StyledParagraph>{year}</StyledParagraph>
+            <StyledCircle />
+            <StyledLine />
         </StyledYearNode>
     );
 };

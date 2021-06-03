@@ -1,16 +1,11 @@
 import { Styled } from '../../react';
 
 const StyledPortrait = Styled.img`
-    width: 200px;
-    height: 200px;
-
-    min-width: 62px;
-    min-height: 62px;
+    width: 8em;
+    height: 8em;
 
     border-radius: 100%;
     border: 1px solid black;
-
-    margin-bottom: ${(props) => props.marginBottom}px;
 
     user-select: none;
 `;

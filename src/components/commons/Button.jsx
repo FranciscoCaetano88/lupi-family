@@ -1,32 +1,28 @@
 import { Styled } from '../../react';
 
 const StyledButton = Styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
 
-    width: fit-content;
-    min-width: 42px;
-    height: fit-content;
-    min-height: 42px;
+    padding: 0.25em 1em;
+    margin-right: 1rem;
 
-    margin-right: 20px;
-    padding: 5px 30px 5px 30px;
+    border-radius: 0.2em;
 
-    border-radius: 32px;
-
+    font-weight: 500;
+    color: rgba(39, 67, 81, 1);
     cursor: pointer;
-
-    white-space: nowrap;
-    color: black;
     user-select: none;
 
     &:hover {
-        background-color: #fafafa;
-        transition: 0.2s ease-in;
+        color: white;
+        background-color: rgba(60, 100, 120, 1);
     }
 
-    transition: all 0.2s ease-out;
+    &:active {
+        background-color: rgba(60, 100, 120, 0.6);
+    }
+
+    transition: all 0.2s ease-in;
 `;
 
 export default StyledButton;

@@ -1,16 +1,22 @@
 import { React, Styled } from '../../react';
 
-const StyledFooter = Styled.div`
-    width: 100%;
-    height: fit-content;
+const StyledFooter = Styled.footer`
+    padding: 1em 1em;
 
-    padding: 20px;
+    background-color: #f5f5f5;
+`;
 
-    background-color: #fafafa;
+const StyledParagraph = Styled.p`
+    margin-bottom: 0 !important;
+    user-select: none;
 `;
 
 const Footer = () => {
-    return <StyledFooter>Família Lupi © 2020</StyledFooter>;
+    return (
+        <StyledFooter>
+            <StyledParagraph>Família Lupi © 2020</StyledParagraph>
+        </StyledFooter>
+    );
 };
 
 export default Footer;

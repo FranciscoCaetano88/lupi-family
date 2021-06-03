@@ -1,10 +1,11 @@
 export const size = {
-    title: 72,
-    title_two: 52,
-    title_three: 18,
-    normal: 16,
+    title: '4rem',
+    title_two: '3rem',
+    title_three: '2rem',
+    normal: '1rem',
 };
 
 export const family = {
-    main: 'ABeeZee',
+    primary: 'basic-sans',
+    secondary: 'sans-serif',
 };

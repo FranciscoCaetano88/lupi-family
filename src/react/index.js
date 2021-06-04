@@ -1,7 +1,7 @@
 import React from 'react';
 import Dom from 'react-dom';
 import {
-    BrowserRouter,
+    HashRouter,
     Switch,
     Route,
     Link,
@@ -13,7 +13,7 @@ import Styled from 'styled-components/macro';
 
 export { React, Dom, Styled };
 export const Router = {
-    BrowserRouter,
+    HashRouter,
     Switch,
     Route,
     Link,

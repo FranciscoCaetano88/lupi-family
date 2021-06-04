@@ -10,7 +10,7 @@ import themes from './themes';
 import stories from '../assets/stories';
 import members from '../assets/members';
 
-const { BrowserRouter, Switch, Route, useLocation } = Router;
+const { HashRouter, Switch, Route, useLocation } = Router;
 
 const RouteMember = () => {
     const location = useLocation();
@@ -101,9 +101,9 @@ const StyledRoot = Styled.div`
 
 export default (
     <StyledRoot>
-        <BrowserRouter>
+        <HashRouter>
             <Switcher />
-        </BrowserRouter>
+        </HashRouter>
     </StyledRoot>
 );
 

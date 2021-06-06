@@ -8,6 +8,8 @@ const StyledNavbar = Styled.div`
     justify-content: center;
 
     padding: 1em 1em;
+
+    background-color: #FAFAFA;
 `;
 
 const StyledButton = Styled(Button)``;

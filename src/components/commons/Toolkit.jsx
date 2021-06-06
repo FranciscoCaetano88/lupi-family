@@ -15,11 +15,11 @@ const StyledButton = Styled.div`
     justify-content: center;
     align-items: center;
 
-    width: 2em;
-    height: 2em;
+    width:  3rem;
+    height: 3rem;
 
-    padding: 0.25em;
-    margin-bottom: 0.8em;
+    padding: 0.25rem;
+    margin-bottom: 0.8rem;
 
     border-radius: 100%;
 
@@ -33,11 +33,11 @@ const StyledButton = Styled.div`
 
     &:hover {
         color: white;
-        background-color: rgba(60, 100, 120, 1);
+        background-color: rgba(250, 250, 250, 1);
     }
 
     &:active {
-        background-color: rgba(60, 100, 120, 0.6);
+        background-color: rgba(250, 250, 250, 0.6);
     }
 
     transition: all 0.2s ease-in;

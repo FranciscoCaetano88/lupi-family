@@ -6,6 +6,7 @@ import Card from './commons/Card.jsx';
 
 import members from '../assets/members';
 import { ZOOM_AMOUNT } from '../enums';
+import Navbar from './commons/Navbar.jsx';
 
 const { useHistory } = Router;
 
@@ -15,6 +16,8 @@ const HEIGHT = 600;
 const StyledSection = Styled.div`
     width: 100%;
     height: 100%;
+
+    overflow: hidden;
 `;
 
 const StyledFamilyTree = Styled.div`
@@ -36,6 +39,7 @@ const StyledCardWrapper = Styled.div`
     height: ${HEIGHT}px;
 
     transform: translate(${(props) => `${props.x}px, ${props.y}px`});
+    font-size: 2rem;
 
     * {
         box-sizing: border-box;
@@ -45,7 +49,7 @@ const StyledCardWrapper = Styled.div`
 const FamilyTree = () => {
     const history = useHistory();
     const ref = React.useRef(null);
-    const [scale, setScale] = React.useState(1);
+    const [scale, setScale] = React.useState(0.7);
 
     const { scrollToCenter, zoomIn, zoomOut } = useToolkitHandlers(
         ref,
@@ -55,6 +59,7 @@ const FamilyTree = () => {
 
     return (
         <StyledSection>
+            <Navbar />
             <StyledFamilyTree scale={scale} ref={ref}>
                 <ReactFamilyTree
                     nodes={members}

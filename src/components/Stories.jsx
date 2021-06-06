@@ -1,5 +1,6 @@
 import { React, Styled, Router } from '../react/index';
 import Page from './commons/Page.jsx';
+import Carousel from './commons/Carousel.jsx';
 
 const { useHistory } = Router;
 
@@ -12,29 +13,18 @@ const StyledContent = Styled.div`
     height: 100%;
 `;
 
-const StyledNodesContainer = Styled.div`
-    display: flex;
-
-    max-width: 24em;
-
-    border-radius: 1rem;
-    border: 1px solid black;
-
-    overflow-x: scroll;
-`;
-
 const Stories = ({ stories }) => {
     return (
         <Page>
             <StyledContent>
                 <h1>A História</h1>
-                <StyledNodesContainer>
+                <Carousel>
                     {stories
                         .sort((s1, s2) => s1.year - s2.year)
                         .map((s, index) => (
                             <YearNode key={index} story={s} />
                         ))}
-                </StyledNodesContainer>
+                </Carousel>
             </StyledContent>
         </Page>
     );

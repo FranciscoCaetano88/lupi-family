@@ -34,7 +34,7 @@ const Main = () => {
                 <StyledParagraph>
                     LUPI - Apelido Italiano que já existia em Portugal no século
                     XVIII, pertencente a uma nobre família de Itália, natural de
-                    San Gimigliano. A linhagem dos Lupi tem antigas origens
+                    San Gimignano. A linhagem dos Lupi tem antigas origens
                     históricas, descendendo de Alberto, 1º Marquês da Ligúria
                     Oriental em 950.{' '}
                     <Link onClick={() => history.push('/story/story-1')}>

@@ -6,6 +6,7 @@
   "scripts": {
     "build": "rm -rf dist; webpack --config webpack.prod.js",
     "build:dev": "rm -rf dist; webpack --config webpack.dev.js",
+    "deploy": "echo \"!Important: make sure dist folder is removed from .gitignore file\"; npm run build; git subtree split --prefix dist -b gh-pages; git push -f origin gh-pages:gh-pages; git branch -D gh-pages",
     "dev": "npm run build:dev; webpack serve --open 'Google Chrome' --config webpack.dev.js",
     "clean": "rm -rf dist; rm -rf node_modules; rm package-lock.json",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,12 +1,14 @@
-import { React, Styled, Router } from '../../react';
+import { React, Styled, Router } from '../react';
+import uuid from 'uuid/v1';
 
-import Page from './Page.jsx';
-import Link from './Link.jsx';
-import Portrait from './Portrait.jsx';
+import Page from './commons/Page.jsx';
+import Link from './commons/Link.jsx';
+import Portrait from './commons/Portrait.jsx';
 
-import { parseText } from '../../utils';
-import { portraits } from '../../assets/images';
-import { COMPONENT_TYPES } from '../../enums';
+import { parseText } from '../utils';
+import { portraits } from '../assets/images';
+import members from '../assets/members';
+import { COMPONENT_TYPES } from '../enums';
 
 const { useHistory } = Router;
 
@@ -53,22 +55,25 @@ const StyledPortrait = Styled(Portrait)`
     margin-bottom: 1em;
 `;
 
-const StyledInfoSection = Styled.div`
-    display: flex;
+const StyledLeftTd = Styled.td`
+    width: 50%;
+
+    padding-right: 0.25em;
+
+    font-size: 1em;
+    font-weight: bold;
+    vertical-align: text-top;
+    text-align: end;
+    color: rgba(0,0,0,0.7);
 `;
 
-const StyledInfo = Styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: ${(props) => props.alignItems};
-    flex-basis: 100%;
+const StyledRightTd = Styled.td`
+    width: 50%;
 
-    padding: 0.4em;
+    padding-left: 0.25em;
 
-    & > p {
-        font-weight: ${(props) => (props.bold ? 600 : '')};
-        margin: 0 !important;
-    }
+    font-size: 1em;
+    color: rgba(0,0,0,0.7);
 `;
 
 const LeftSection = ({ member, history }) => {
@@ -80,26 +85,65 @@ const LeftSection = ({ member, history }) => {
             <StyledPortrait src={portraits[id]} />
             <h1>{name}</h1>
             <StyledSeparator />
-            <StyledInfoSection>
-                <StyledInfo alignItems={'flex-end'} bold={true}>
-                    <p>Data Nascimento</p>
-                    <p>Data Óbito</p>
-                    <p>Pais</p>
-                    <p>Esposos</p>
-                    <p>Filhos</p>
-                    <p>Irmãos</p>
-                </StyledInfo>
-                <StyledInfo>
-                    <p>{birth}</p>
-                    <p>{death}</p>
-                    <p>{parents.map((p) => p.id).join(', ')}</p>
-                    <p>{spouses.map((s) => s.id).join(', ')}</p>
-                    <p>{children.map((c) => c.id).join(', ')}</p>
-                    <p>{siblings.map((s) => s.id).join(', ')}</p>
-                </StyledInfo>
-            </StyledInfoSection>
+            <table>
+                <tbody>
+                    <tr>
+                        <StyledLeftTd>Data Nascimento</StyledLeftTd>
+                        <StyledRightTd>{birth}</StyledRightTd>
+                    </tr>
+                    <tr>
+                        <StyledLeftTd>Data Óbito</StyledLeftTd>
+                        <StyledRightTd>{death}</StyledRightTd>
+                    </tr>
+                    <tr>
+                        <StyledLeftTd>Pais</StyledLeftTd>
+                        <StyledRightTd>
+                            {toSeparatedLinks(parents, history)}
+                        </StyledRightTd>
+                    </tr>
+                    <tr>
+                        <StyledLeftTd>Casamentos</StyledLeftTd>
+                        <StyledRightTd>
+                            {toSeparatedLinks(spouses, history)}
+                        </StyledRightTd>
+                    </tr>
+                    <tr>
+                        <StyledLeftTd>Filhos</StyledLeftTd>
+                        <StyledRightTd>
+                            {toSeparatedLinks(children, history)}
+                        </StyledRightTd>
+                    </tr>
+                    <tr>
+                        <StyledLeftTd>Irmãos</StyledLeftTd>
+                        <StyledRightTd>
+                            {toSeparatedLinks(siblings, history)}
+                        </StyledRightTd>
+                    </tr>
+                </tbody>
+            </table>
         </StyledLeftSection>
     );
+};
+
+function toSeparatedLinks(members, history) {
+    return members
+        .map((p) => (
+            <LinkMember
+                key={`${p.id}${uuid()}`}
+                memberId={p.id}
+                history={history}
+            />
+        ))
+        .reduce((accu, elem) => {
+            return accu === null ? [elem] : [...accu, ', ', elem];
+        }, null);
+}
+
+const LinkMember = ({ memberId, history }) => {
+    const member = members.find((m) => m.id === memberId);
+    const { id, name } = member;
+
+    return <Link onClick={() => history.push(`/family/${id}`)}>{name}</Link>;
 };
 
 const StyledRightSection = Styled.div`
@@ -134,6 +178,10 @@ const StyledColumnParagraph = Styled.p`
     margin: 0 !important;
 `;
 
+const StyledParagraph = Styled.p`
+    text-align: justify;
+`;
+
 const RightSection = ({ member, history }) => {
     const splitter = /({{.+?}})/;
     const { biography, events } = member;
@@ -141,7 +189,9 @@ const RightSection = ({ member, history }) => {
     return (
         <StyledRightSection>
             <h1>Biografia</h1>
-            <p>{parseText(biography, splitter, transform(history))}</p>
+            <StyledParagraph>
+                {parseText(biography, splitter, transform(history))}
+            </StyledParagraph>
             <h1>Eventos Importantes</h1>
             <StyledTable>
                 <StyledRow>

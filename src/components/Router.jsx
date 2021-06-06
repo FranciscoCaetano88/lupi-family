@@ -2,7 +2,7 @@ import { React, Router, Styled } from '../react';
 
 import Main from './Main.jsx';
 import FamilyTree from './FamilyTree.jsx';
-import Member from './commons/Member.jsx';
+import Member from './Member.jsx';
 import Stories from './Stories.jsx';
 import Story from './Story.jsx';
 
@@ -78,7 +78,6 @@ const StyledRoot = Styled.div`
     h3,
     p {
         margin-bottom: 2rem;
-        max-width: 72ch;
     }
 
     p {

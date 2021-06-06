@@ -14,6 +14,10 @@ const StyledTitle = Styled.h1`
     text-align: center;
 `;
 
+const StyledParagraph = Styled.p`
+    text-align: justify;
+`;
+
 const Story = ({ story }) => {
     const history = useHistory();
     const splitter = /({{.+?}})/;
@@ -24,7 +28,9 @@ const Story = ({ story }) => {
             <StyledTitle>
                 {parseText(title, splitter, transform(history))}
             </StyledTitle>
-            <p>{parseText(description, splitter, transform(history))}</p>
+            <StyledParagraph>
+                {parseText(description, splitter, transform(history))}
+            </StyledParagraph>
             <Carousel images={images} />
         </Page>
     );

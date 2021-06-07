@@ -2,6 +2,8 @@ import { React, Styled } from '../../react';
 
 const StyledCarousel = Styled.div`
     display: flex;
+    justify-content: space-between;
+    width: fit-content;
 
     border-radius: 1rem;
     border: 1px solid black;
@@ -40,7 +42,7 @@ const StyledButton = Styled.div`
 
 const StyledNavigator = Styled.div`
     display: flex;
-
+    flex-basis: 100%;
     max-width: 24em;
 
     overflow-x: scroll;

@@ -4,6 +4,7 @@ import uuid from 'uuid/v1';
 import Page from './commons/Page.jsx';
 import Link from './commons/Link.jsx';
 import Carousel from './commons/Carousel.jsx';
+import ModalOverlay from './commons/ModalOverlay.jsx';
 
 import { COMPONENT_TYPES } from '../enums';
 import { parseText } from '../utils';
@@ -18,25 +19,79 @@ const StyledParagraph = Styled.p`
     text-align: justify;
 `;
 
+const StyledCarouselContainer = Styled.div`
+    display: flex;
+    justify-content: center;
+`;
+
 const Story = ({ story }) => {
+    const [fullScreen, setFullscreen] = React.useState(false);
     const history = useHistory();
     const splitter = /({{.+?}})/;
     const { title, description, images } = story;
 
     return (
         <Page>
-            <StyledTitle>
-                {parseText(title, splitter, transform(history))}
-            </StyledTitle>
-            <StyledParagraph>
-                {parseText(description, splitter, transform(history))}
-            </StyledParagraph>
-            <Carousel images={images} />
+            {fullScreen && (
+                <ModalOverlay onClose={() => setFullscreen(false)}>
+                    {<img src={fullScreen.url} alt={fullScreen.name} />}
+                </ModalOverlay>
+            )}
+            <section>
+                <StyledTitle>
+                    {parseText(title, splitter, transform(history))}
+                </StyledTitle>
+                <StyledParagraph>
+                    {parseText(description, splitter, transform(history))}
+                </StyledParagraph>
+                <StyledCarouselContainer>
+                    <Carousel>
+                        {images.map((i, index) => (
+                            <ImageCard
+                                key={index}
+                                image={i}
+                                onClick={(image) => setFullscreen(image)}
+                            />
+                        ))}
+                    </Carousel>
+                </StyledCarouselContainer>
+            </section>
         </Page>
     );
 };
 
 export default Story;
+
+const StyledImageCard = Styled.div`
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 8em;
+    height: 8em;
+
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    transition: all 0.2s ease-in;
+`;
+
+const ImageCard = ({ image, onClick }) => {
+    const { name, url } = image;
+
+    return (
+        <StyledImageCard onClick={() => onClick(image)}>
+            <img src={url} alt={name} />
+        </StyledImageCard>
+    );
+};
 
 function transform(history) {
     return (string) => {

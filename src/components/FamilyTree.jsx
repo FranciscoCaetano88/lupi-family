@@ -5,7 +5,7 @@ import Toolkit from './commons/Toolkit.jsx';
 import Card from './commons/Card.jsx';
 
 import members from '../assets/members';
-import { ZOOM_AMOUNT } from '../enums';
+import { ZOOM_AMOUNT, ZOOM_MAX, ZOOM_MIN } from '../enums';
 import Navbar from './commons/Navbar.jsx';
 
 const { useHistory } = Router;
@@ -20,12 +20,18 @@ const StyledSection = Styled.div`
     overflow: hidden;
 `;
 
-const StyledFamilyTree = Styled.div`
+const StyledFamilyContainer = Styled.div`
     width: 100%;
     height: 100%;
 
     overflow: auto;
-    zoom: ${(props) => props.scale};
+`;
+
+const StyledFamilyTree = Styled.div`
+    width: fit-content;
+    height: fit-content;
+
+    transform: scale(${(props) => props.scale}, ${(props) => props.scale});
 `;
 
 const StyledCardWrapper = Styled.div`
@@ -49,7 +55,7 @@ const StyledCardWrapper = Styled.div`
 const FamilyTree = () => {
     const history = useHistory();
     const ref = React.useRef(null);
-    const [scale, setScale] = React.useState(0.7);
+    const [scale, setScale] = React.useState(1);
 
     const { scrollToCenter, zoomIn, zoomOut } = useToolkitHandlers(
         ref,
@@ -60,28 +66,30 @@ const FamilyTree = () => {
     return (
         <StyledSection>
             <Navbar />
-            <StyledFamilyTree scale={scale} ref={ref}>
-                <ReactFamilyTree
-                    nodes={members}
-                    rootId={members[0].id}
-                    width={WIDTH}
-                    height={HEIGHT}
-                    renderNode={(info) => (
-                        <StyledCardWrapper
-                            key={info.id}
-                            x={info.left * (WIDTH / 2)}
-                            y={info.top * (HEIGHT / 2)}
-                        >
-                            <Card
-                                info={info}
-                                onClick={() =>
-                                    history.push(`family/${info.id}`)
-                                }
-                            />
-                        </StyledCardWrapper>
-                    )}
-                />
-            </StyledFamilyTree>
+            <StyledFamilyContainer ref={ref}>
+                <StyledFamilyTree scale={scale}>
+                    <ReactFamilyTree
+                        nodes={members}
+                        rootId={members[0].id}
+                        width={WIDTH}
+                        height={HEIGHT}
+                        renderNode={(info) => (
+                            <StyledCardWrapper
+                                key={info.id}
+                                x={info.left * (WIDTH / 2)}
+                                y={info.top * (HEIGHT / 2)}
+                            >
+                                <Card
+                                    info={info}
+                                    onClick={() =>
+                                        history.push(`family/${info.id}`)
+                                    }
+                                />
+                            </StyledCardWrapper>
+                        )}
+                    />
+                </StyledFamilyTree>
+            </StyledFamilyContainer>
             <Toolkit
                 scrollToCenter={scrollToCenter}
                 zoomIn={zoomIn}
@@ -105,11 +113,21 @@ function useToolkitHandlers(ref, scale, setScale) {
     };
 
     const zoomIn = () => {
-        setScale(scale + ZOOM_AMOUNT);
+        let newScale = scale + ZOOM_AMOUNT;
+        if (newScale >= ZOOM_MAX) {
+            newScale = ZOOM_MAX;
+        }
+
+        setScale(newScale);
     };
 
     const zoomOut = () => {
-        setScale(scale - ZOOM_AMOUNT);
+        let newScale = scale - ZOOM_AMOUNT;
+        if (newScale <= ZOOM_MIN) {
+            newScale = ZOOM_MIN;
+        }
+
+        setScale(newScale);
     };
 
     React.useEffect(scrollToCenter, [ref]);

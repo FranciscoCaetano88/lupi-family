@@ -4,3 +4,5 @@ export const COMPONENT_TYPES = {
 };
 
 export const ZOOM_AMOUNT = 0.1;
+export const ZOOM_MAX = 1;
+export const ZOOM_MIN = 0.1;

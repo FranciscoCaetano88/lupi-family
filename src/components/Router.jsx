@@ -48,10 +48,10 @@ const Switcher = () => {
             <Route path={'/stories'}>
                 <Stories stories={stories} />
             </Route>
-            <Route path={'/editor/family/'}>
+            <Route path={'/editor/member/'}>
                 <MemberEditor />
             </Route>
-            <Route path={'/editor/stories/'}>
+            <Route path={'/editor/story/'}>
                 <StoryEditor />
             </Route>
             <RouteStory />

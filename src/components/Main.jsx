@@ -37,7 +37,13 @@ const Main = () => {
                     San Gimignano. A linhagem dos Lupi tem antigas origens
                     históricas, descendendo de Alberto, 1º Marquês da Ligúria
                     Oriental em 950.{' '}
-                    <Link onClick={() => history.push('/story/story-1')}>
+                    <Link
+                        onClick={() =>
+                            history.push(
+                                '/story/5404e060-cc39-11eb-b9f8-5172280506e3'
+                            )
+                        }
+                    >
                         Ler história...
                     </Link>
                 </StyledParagraph>

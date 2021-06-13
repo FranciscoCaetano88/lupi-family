@@ -28,12 +28,12 @@ const Footer = () => {
             <StyledParagraph>{`Família Lupi © ${year}`}</StyledParagraph>
             <div>
                 <StyledParagraph>
-                    <Link onClick={() => history.push('/editor/family/')}>
+                    <Link onClick={() => history.push('/editor/member/')}>
                         Gerar membro da família
                     </Link>
                 </StyledParagraph>
                 <StyledParagraph>
-                    <Link onClick={() => history.push('/editor/stories/')}>
+                    <Link onClick={() => history.push('/editor/story/')}>
                         Gerar evento histórico
                     </Link>
                 </StyledParagraph>

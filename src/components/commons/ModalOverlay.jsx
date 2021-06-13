@@ -22,8 +22,9 @@ const StyledModal = Styled.div`
     align-items: center;
 
     max-width: 26em;
-    max-height: 20em;
+    max-height: 24em;
 
+    padding: 1em;
     border-radius: 2em;
 
     top: 50%;

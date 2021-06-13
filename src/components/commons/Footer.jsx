@@ -1,4 +1,9 @@
-import { React, Styled } from '../../react';
+import { React, Styled, Router } from '../../react';
+import Link from './Link.jsx';
+
+import { getCurrentDate } from '../../utils';
+
+const { useHistory } = Router;
 
 const StyledFooter = Styled.footer`
     padding: 1em 1em;
@@ -12,9 +17,22 @@ const StyledParagraph = Styled.p`
 `;
 
 const Footer = () => {
+    const history = useHistory();
+    const { year } = getCurrentDate();
+
     return (
         <StyledFooter>
-            <StyledParagraph>Família Lupi © 2020</StyledParagraph>
+            <StyledParagraph>
+                <Link onClick={() => history.push('/editor/family/')}>
+                    Contribute to the family
+                </Link>
+            </StyledParagraph>
+            <StyledParagraph>
+                <Link onClick={() => history.push('/editor/stories/')}>
+                    Contribute to stories
+                </Link>
+            </StyledParagraph>
+            <StyledParagraph>{`Família Lupi © ${year}`}</StyledParagraph>
         </StyledFooter>
     );
 };

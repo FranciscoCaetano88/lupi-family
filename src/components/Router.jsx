@@ -3,6 +3,7 @@ import { React, Router, Styled } from '../react';
 import Main from './Main.jsx';
 import FamilyTree from './FamilyTree.jsx';
 import Member from './Member.jsx';
+import MemberEditor from './MemberEditor.jsx';
 import Stories from './Stories.jsx';
 import Story from './Story.jsx';
 
@@ -45,6 +46,12 @@ const Switcher = () => {
             </Route>
             <Route path={'/stories'}>
                 <Stories stories={stories} />
+            </Route>
+            <Route path={'/editor/family/'}>
+                <MemberEditor />
+            </Route>
+            <Route path={'/editor/stories/'}>
+                <MemberEditor />
             </Route>
             <RouteStory />
             <RouteMember />

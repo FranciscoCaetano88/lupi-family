@@ -195,12 +195,14 @@ const RightSection = ({ member, history }) => {
             <h1>Eventos Importantes</h1>
             <StyledTable>
                 <StyledRow>
-                    {Object.keys(events).map((key) => (
-                        <StyledColumn key={`${key}-title`}>
-                            <StyledColumnParagraph>{key}</StyledColumnParagraph>
+                    {events.map((e, index) => (
+                        <StyledColumn key={index}>
+                            <StyledColumnParagraph>
+                                {e.year}
+                            </StyledColumnParagraph>
                             <StyledColumnParagraph>
                                 {parseText(
-                                    events[key],
+                                    e.description,
                                     splitter,
                                     transform(history)
                                 )}

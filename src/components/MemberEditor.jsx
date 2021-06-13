@@ -158,7 +158,7 @@ const MemberEditor = ({ memberState = getDefaultMember() }) => {
                 </StyledDownUpLoadButton>
                 <DropZone onClick={(json) => setMember(json)}>
                     <StyledDownUpLoadButton onClick={() => {}}>
-                        IMPORT .JSON
+                        IMPORTAR .JSON
                     </StyledDownUpLoadButton>
                 </DropZone>
             </ButtonSection>

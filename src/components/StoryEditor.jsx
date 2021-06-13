@@ -119,7 +119,7 @@ const MemberEditor = ({ storyState = getDefaultStory() }) => {
                 </StyledDownUpLoadButton>
                 <DropZone onClick={(json) => setStory(json)}>
                     <StyledDownUpLoadButton onClick={() => {}}>
-                        IMPORT .JSON
+                        IMPORTAR .JSON
                     </StyledDownUpLoadButton>
                 </DropZone>
             </ButtonSection>

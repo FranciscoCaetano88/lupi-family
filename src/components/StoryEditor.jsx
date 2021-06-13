@@ -6,9 +6,7 @@ import Button from './commons/Button.jsx';
 import ModalOverlay from './commons/ModalOverlay.jsx';
 import DropZone from './commons/DropZone.jsx';
 
-import members from '../assets/members';
 import { downloadJson } from '../utils';
-import { GENDER, MEMBER_TYPES } from '../enums';
 
 const StyledButton = Styled(Button)`
     margin-left: 0.8em;
@@ -70,14 +68,14 @@ const ButtonSection = Styled.section`
     display: flex;
 `;
 
-const MemberEditor = ({ memberState = getDefaultMember() }) => {
-    const [member, setMember] = React.useState(memberState);
+const MemberEditor = ({ storyState = getDefaultStory() }) => {
+    const [story, setStory] = React.useState(storyState);
     const [modal, setModal] = React.useState(false);
     const [operation, setOperation] = React.useState(null);
     const { handleFieldChange, handleOnAdd, handleOnRemove, onModalConfirm } =
         useHandlers({
-            member,
-            setMember,
+            story,
+            setStory,
             operation,
             setOperation,
             modal,
@@ -88,75 +86,38 @@ const MemberEditor = ({ memberState = getDefaultMember() }) => {
         <Page>
             {modal && (
                 <ModalOverlay onClose={() => setModal(false)}>
-                    {operation === 'events' ? (
-                        <EventModalSelector onConfirm={onModalConfirm} />
-                    ) : (
-                        <MemberModalSelector onConfirm={onModalConfirm} />
-                    )}
+                    <ImagesModalSelector onConfirm={onModalConfirm} />
                 </ModalOverlay>
             )}
             <section>
                 <TextAreaEditor
-                    fieldId={'name'}
-                    value={member.name}
+                    fieldId={'title'}
+                    value={story.title}
                     onChange={handleFieldChange}
                 />
                 <DateEditor
-                    fieldId={'birth'}
-                    value={member.birth}
+                    fieldId={'year'}
+                    value={story.year}
                     onChange={handleFieldChange}
-                />
-                <DateEditor
-                    fieldId={'death'}
-                    value={member.death}
-                    onChange={handleFieldChange}
-                />
-                <GenderEditor
-                    value={member.gender}
-                    onChange={handleFieldChange}
-                />
-                <DropdownEditor
-                    fieldId={'parents'}
-                    options={member.parents}
-                    onAdd={handleOnAdd}
-                    onRemove={handleOnRemove}
-                />
-                <DropdownEditor
-                    fieldId={'spouses'}
-                    options={member.spouses}
-                    onAdd={handleOnAdd}
-                    onRemove={handleOnRemove}
-                />
-                <DropdownEditor
-                    fieldId={'children'}
-                    options={member.children}
-                    onAdd={handleOnAdd}
-                    onRemove={handleOnRemove}
-                />
-                <DropdownEditor
-                    fieldId={'siblings'}
-                    options={member.siblings}
-                    onAdd={handleOnAdd}
-                    onRemove={handleOnRemove}
                 />
                 <TextAreaEditor
-                    fieldId={'biography'}
-                    value={member.biography}
+                    fieldId={'description'}
+                    value={story.description}
                     onChange={handleFieldChange}
                     big={true}
                 />
                 <DropdownEditor
-                    fieldId={'events'}
-                    options={member.events}
+                    fieldId={'images'}
+                    options={story.images}
                     onAdd={handleOnAdd}
                     onRemove={handleOnRemove}
                 />
             </section>
             <ButtonSection>
-                <StyledDownUpLoadButton onClick={() => downloadJson(member)}>
+                <StyledDownUpLoadButton onClick={() => downloadJson(story)}>
                     DOWNLOAD .JSON
                 </StyledDownUpLoadButton>
-                <DropZone onClick={(json) => setMember(json)}>
+                <DropZone onClick={(json) => setStory(json)}>
                     <StyledDownUpLoadButton onClick={() => {}}>
                         IMPORT .JSON
                     </StyledDownUpLoadButton>
@@ -175,67 +136,13 @@ const StyledModalContainer = Styled.div`
     align-items: flex-start;
 `;
 
-const MemberModalSelector = ({ onConfirm }) => {
-    const [id, setId] = React.useState(members[0].id);
-    const [type, setType] = React.useState(MEMBER_TYPES.blood);
-
-    return (
-        <StyledModalContainer>
-            Membro:
-            <StyledDropdown
-                value={id}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    setId(target.value);
-                }}
-            >
-                {members.map((m, index) => (
-                    <option key={index} value={m.id}>
-                        {m.name}
-                    </option>
-                ))}
-            </StyledDropdown>
-            Tipo de relação:
-            <StyledDropdown
-                value={type}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    setType(target.value);
-                }}
-            >
-                {Object.keys(MEMBER_TYPES).map((key, index) => (
-                    <option key={index} value={key}>
-                        {MEMBER_TYPES[key]}
-                    </option>
-                ))}
-            </StyledDropdown>
-            <StyledButton
-                onClick={() => {
-                    onConfirm({ id, type });
-                }}
-            >
-                Confirmar
-            </StyledButton>
-        </StyledModalContainer>
-    );
-};
-
-const EventModalSelector = ({ onConfirm }) => {
-    const [year, setYear] = React.useState('');
-    const [description, setDescription] = React.useState('');
+const ImagesModalSelector = ({ onConfirm }) => {
     const [name, setName] = React.useState('');
+    const [url, setUrl] = React.useState('');
 
     return (
         <StyledModalContainer>
-            Título:
+            Nome:
             <StyledTextArea
                 value={name}
                 onChange={(e) => {
@@ -247,43 +154,24 @@ const EventModalSelector = ({ onConfirm }) => {
                     setName(target.value);
                 }}
             />
-            Ano:
-            <StyledInput
-                type="date"
-                value={year}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    setYear(target.value);
-                }}
-            />
-            Descrição:
+            Url:
             <StyledTextArea
-                value={description}
+                value={url}
                 onChange={(e) => {
                     const { target } = e;
                     if (!target) {
                         return;
                     }
 
-                    setDescription(target.value);
+                    setUrl(target.value);
                 }}
             />
             <StyledButton
                 onClick={() => {
-                    if (!name || !year || !description) {
+                    if (!name || !url) {
                         return;
                     }
-
-                    onConfirm({
-                        id: uuid(),
-                        name,
-                        year,
-                        description,
-                    });
+                    onConfirm({ id: uuid(), name, url });
                 }}
             >
                 Confirmar
@@ -360,10 +248,9 @@ const DropdownEditor = ({ fieldId, options, onAdd, onRemove }) => {
                 }}
             >
                 {options.map((opt, index) => {
-                    const member = members.find((memb) => memb.id === opt.id);
                     return (
                         <option key={index} value={opt.id}>
-                            {!member ? opt.name : member.name}
+                            {opt.name}
                         </option>
                     );
                 })}
@@ -393,48 +280,23 @@ const DropdownEditor = ({ fieldId, options, onAdd, onRemove }) => {
     );
 };
 
-const GenderEditor = ({ value, onChange }) => {
-    const [selected, setSelected] = React.useState(value);
-
-    return (
-        <div>
-            <StyledParagraph>Género: </StyledParagraph>
-            <StyledDropdown
-                value={selected}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    setSelected(target.value);
-                    onChange('gender', target.value);
-                }}
-            >
-                <option value="male">Masculino</option>
-                <option value="female">Feminino</option>
-            </StyledDropdown>
-        </div>
-    );
-};
-
-function useHandlers({ member, setMember, operation, setOperation, setModal }) {
+function useHandlers({ story, setStory, operation, setOperation, setModal }) {
     const handleFieldChange = (fieldId, value) => {
-        setMember({ ...member, [fieldId]: value });
+        setStory({ ...story, [fieldId]: value });
     };
     const handleOnAdd = (fieldId) => {
         setOperation(fieldId);
         setModal(true);
     };
     const handleOnRemove = (fieldId, value) => {
-        setMember({
-            ...member,
-            [fieldId]: member[fieldId].filter((p) => p.id !== value),
+        setStory({
+            ...story,
+            [fieldId]: story[fieldId].filter((p) => p.id !== value),
         });
     };
     const onModalConfirm = (selectedOption) => {
         setModal(false);
-        const hasOption = member[operation].some(
+        const hasOption = story[operation].some(
             (m) => m.id === selectedOption.id
         );
 
@@ -442,27 +304,21 @@ function useHandlers({ member, setMember, operation, setOperation, setModal }) {
             return;
         }
 
-        setMember({
-            ...member,
-            [operation]: [...member[operation], selectedOption],
+        setStory({
+            ...story,
+            [operation]: [...story[operation], selectedOption],
         });
     };
 
     return { handleFieldChange, handleOnAdd, handleOnRemove, onModalConfirm };
 }
 
-function getDefaultMember() {
+function getDefaultStory() {
     return {
         id: uuid(),
-        name: '',
-        gender: GENDER.male,
-        birth: '',
-        death: '',
-        parents: [],
-        spouses: [],
-        children: [],
-        siblings: [],
-        biography: '',
-        events: [],
+        title: '',
+        year: '',
+        description: '',
+        images: [],
     };
 }

@@ -4,6 +4,7 @@ import Main from './Main.jsx';
 import FamilyTree from './FamilyTree.jsx';
 import Member from './Member.jsx';
 import MemberEditor from './MemberEditor.jsx';
+import StoryEditor from './StoryEditor.jsx';
 import Stories from './Stories.jsx';
 import Story from './Story.jsx';
 
@@ -51,7 +52,7 @@ const Switcher = () => {
                 <MemberEditor />
             </Route>
             <Route path={'/editor/stories/'}>
-                <MemberEditor />
+                <StoryEditor />
             </Route>
             <RouteStory />
             <RouteMember />

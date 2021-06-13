@@ -17,7 +17,7 @@ export function getCurrentDate() {
     return { day, month, year };
 }
 
-export function downloadJson(json) {
+export function downloadJson(json, name) {
     const snapshot = JSON.stringify(json);
 
     const MIME_TYPE = 'application/json';
@@ -25,5 +25,5 @@ export function downloadJson(json) {
         type: MIME_TYPE,
     });
 
-    saveAs(blob);
+    saveAs(blob, name);
 }

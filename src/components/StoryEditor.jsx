@@ -114,7 +114,14 @@ const MemberEditor = ({ storyState = getDefaultStory() }) => {
                 />
             </section>
             <ButtonSection>
-                <StyledDownUpLoadButton onClick={() => downloadJson(story)}>
+                <StyledDownUpLoadButton
+                    onClick={() =>
+                        downloadJson(
+                            story,
+                            story.title.toLowerCase().replace(/\s/g, '-')
+                        )
+                    }
+                >
                     DOWNLOAD .JSON
                 </StyledDownUpLoadButton>
                 <DropZone onClick={(json) => setStory(json)}>

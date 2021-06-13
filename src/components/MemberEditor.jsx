@@ -153,7 +153,14 @@ const MemberEditor = ({ memberState = getDefaultMember() }) => {
                 />
             </section>
             <ButtonSection>
-                <StyledDownUpLoadButton onClick={() => downloadJson(member)}>
+                <StyledDownUpLoadButton
+                    onClick={() =>
+                        downloadJson(
+                            member,
+                            member.name.toLowerCase().replace(/\s/g, '-')
+                        )
+                    }
+                >
                     DOWNLOAD .JSON
                 </StyledDownUpLoadButton>
                 <DropZone onClick={(json) => setMember(json)}>

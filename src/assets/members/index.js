@@ -1,4 +1,4 @@
-import judithLupiNogueira from './judith-lupi-nogueira.json';
-import joaoPauloFreire from './joao-paulo-freire.json';
+import miguelAngeloLupi from './miguel-angelo-lupi.json';
+import vicenciaLupi from './vicencia-lupi.json';
 
-export default [judithLupiNogueira, joaoPauloFreire];
+export default [miguelAngeloLupi, vicenciaLupi];

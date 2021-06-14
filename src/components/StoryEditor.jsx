@@ -7,8 +7,10 @@ import ModalOverlay from './commons/ModalOverlay.jsx';
 import DropZone from './commons/DropZone.jsx';
 
 import { downloadJson } from '../utils';
+import stories from '../assets/stories';
 
 const StyledButton = Styled(Button)`
+    height: fit-content;
     margin-left: 0.8em;
 
     color: white;
@@ -72,15 +74,20 @@ const MemberEditor = ({ storyState = getDefaultStory() }) => {
     const [story, setStory] = React.useState(storyState);
     const [modal, setModal] = React.useState(false);
     const [operation, setOperation] = React.useState(null);
-    const { handleFieldChange, handleOnAdd, handleOnRemove, onModalConfirm } =
-        useHandlers({
-            story,
-            setStory,
-            operation,
-            setOperation,
-            modal,
-            setModal,
-        });
+    const {
+        handleFieldChange,
+        handleOnAdd,
+        handleOnRemove,
+        onModalConfirm,
+        onEditClick,
+    } = useHandlers({
+        story,
+        setStory,
+        operation,
+        setOperation,
+        modal,
+        setModal,
+    });
 
     return (
         <Page>
@@ -89,6 +96,9 @@ const MemberEditor = ({ storyState = getDefaultStory() }) => {
                     <ImagesModalSelector onConfirm={onModalConfirm} />
                 </ModalOverlay>
             )}
+            <section>
+                <EditStory onEditClick={onEditClick} />
+            </section>
             <section>
                 <TextAreaEditor
                     fieldId={'title'}
@@ -136,6 +146,46 @@ const MemberEditor = ({ storyState = getDefaultStory() }) => {
 };
 
 export default MemberEditor;
+
+const StyledEditStory = Styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
+const StyledEditDropdown = Styled(StyledDropdown)`
+    margin-bottom: 0;
+`;
+
+const EditStory = ({ onEditClick }) => {
+    const [id, setId] = React.useState(stories[0].id);
+
+    return (
+        <StyledEditStory>
+            <StyledEditDropdown
+                value={id}
+                onChange={(e) => {
+                    const { target } = e;
+                    if (!target) {
+                        return;
+                    }
+
+                    setId(target.value);
+                }}
+            >
+                {stories.map((m, index) => (
+                    <option key={index} value={m.id}>
+                        {m.title}
+                    </option>
+                ))}
+            </StyledEditDropdown>
+            <StyledButton
+                onClick={() => onEditClick(stories.find((m) => m.id === id))}
+            >
+                Editar
+            </StyledButton>
+        </StyledEditStory>
+    );
+};
 
 const StyledModalContainer = Styled.div`
     display: flex;
@@ -318,7 +368,17 @@ function useHandlers({ story, setStory, operation, setOperation, setModal }) {
         });
     };
 
-    return { handleFieldChange, handleOnAdd, handleOnRemove, onModalConfirm };
+    const onEditClick = (member) => {
+        setStory(member);
+    };
+
+    return {
+        handleFieldChange,
+        handleOnAdd,
+        handleOnRemove,
+        onModalConfirm,
+        onEditClick,
+    };
 }
 
 function getDefaultStory() {

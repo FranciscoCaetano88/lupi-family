@@ -11,6 +11,7 @@ import { downloadJson } from '../utils';
 import { GENDER, MEMBER_TYPES } from '../enums';
 
 const StyledButton = Styled(Button)`
+    height: fit-content;
     margin-left: 0.8em;
 
     color: white;
@@ -74,15 +75,20 @@ const MemberEditor = ({ memberState = getDefaultMember() }) => {
     const [member, setMember] = React.useState(memberState);
     const [modal, setModal] = React.useState(false);
     const [operation, setOperation] = React.useState(null);
-    const { handleFieldChange, handleOnAdd, handleOnRemove, onModalConfirm } =
-        useHandlers({
-            member,
-            setMember,
-            operation,
-            setOperation,
-            modal,
-            setModal,
-        });
+    const {
+        handleFieldChange,
+        handleOnAdd,
+        handleOnRemove,
+        onModalConfirm,
+        onEditClick,
+    } = useHandlers({
+        member,
+        setMember,
+        operation,
+        setOperation,
+        modal,
+        setModal,
+    });
 
     return (
         <Page>
@@ -95,6 +101,9 @@ const MemberEditor = ({ memberState = getDefaultMember() }) => {
                     )}
                 </ModalOverlay>
             )}
+            <section>
+                <EditMember onEditClick={onEditClick} />
+            </section>
             <section>
                 <TextAreaEditor
                     fieldId={'name'}
@@ -175,6 +184,46 @@ const MemberEditor = ({ memberState = getDefaultMember() }) => {
 };
 
 export default MemberEditor;
+
+const StyledEditMember = Styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
+const StyledEditDropdown = Styled(StyledDropdown)`
+    margin-bottom: 0;
+`;
+
+const EditMember = ({ onEditClick }) => {
+    const [id, setId] = React.useState(members[0].id);
+
+    return (
+        <StyledEditMember>
+            <StyledEditDropdown
+                value={id}
+                onChange={(e) => {
+                    const { target } = e;
+                    if (!target) {
+                        return;
+                    }
+
+                    setId(target.value);
+                }}
+            >
+                {members.map((m, index) => (
+                    <option key={index} value={m.id}>
+                        {m.name}
+                    </option>
+                ))}
+            </StyledEditDropdown>
+            <StyledButton
+                onClick={() => onEditClick(members.find((m) => m.id === id))}
+            >
+                Editar
+            </StyledButton>
+        </StyledEditMember>
+    );
+};
 
 const StyledModalContainer = Styled.div`
     display: flex;
@@ -456,7 +505,17 @@ function useHandlers({ member, setMember, operation, setOperation, setModal }) {
         });
     };
 
-    return { handleFieldChange, handleOnAdd, handleOnRemove, onModalConfirm };
+    const onEditClick = (member) => {
+        setMember(member);
+    };
+
+    return {
+        handleFieldChange,
+        handleOnAdd,
+        handleOnRemove,
+        onModalConfirm,
+        onEditClick,
+    };
 }
 
 function getDefaultMember() {

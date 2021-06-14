@@ -14,6 +14,7 @@ import vicenteLupi from './vicente-lupi.json';
 
 export default [
     miguelAngeloLupi,
+    vicenciaAntolini,
     bandeiraDeMelo,
     bernardaAmeliaDasDores,
     carlotaLupi,
@@ -24,6 +25,5 @@ export default [
     mariaCandidaCorrea,
     mariaJoseLupi,
     mariaSorianaDoCarmo,
-    vicenciaAntolini,
     vicenteLupi,
 ];

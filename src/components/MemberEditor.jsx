@@ -5,6 +5,7 @@ import Page from './commons/Page.jsx';
 import Button from './commons/Button.jsx';
 import ModalOverlay from './commons/ModalOverlay.jsx';
 import DropZone from './commons/DropZone.jsx';
+import { useLocale } from './hooks/useLocale';
 
 import members from '../assets/members';
 import { downloadJson } from '../utils';
@@ -238,6 +239,7 @@ const StyledModalContainer = Styled.div`
 `;
 
 const MemberModalSelector = ({ onConfirm }) => {
+    const locale = useLocale();
     const [id, setId] = React.useState(members[0].id);
     const [type, setType] = React.useState(MEMBER_TYPES.blood);
 
@@ -275,7 +277,7 @@ const MemberModalSelector = ({ onConfirm }) => {
             >
                 {Object.keys(MEMBER_TYPES).map((key, index) => (
                     <option key={index} value={key}>
-                        {MEMBER_TYPES[key]}
+                        {locale.member.types[MEMBER_TYPES[key]]}
                     </option>
                 ))}
             </StyledDropdown>
@@ -355,9 +357,10 @@ const EventModalSelector = ({ onConfirm }) => {
 };
 
 const TextAreaEditor = ({ fieldId, value, onChange, big }) => {
+    const locale = useLocale();
     return (
         <div>
-            <StyledParagraph>{fieldId}: </StyledParagraph>
+            <StyledParagraph>{locale.member[fieldId]}: </StyledParagraph>
             <StyledTextArea
                 big={big}
                 value={value}
@@ -379,9 +382,10 @@ const TextAreaEditor = ({ fieldId, value, onChange, big }) => {
 };
 
 const DateEditor = ({ fieldId, value, onChange }) => {
+    const locale = useLocale();
     return (
         <div>
-            <StyledParagraph>{fieldId}: </StyledParagraph>
+            <StyledParagraph>{locale.member[fieldId]}: </StyledParagraph>
             <StyledInput
                 type="date"
                 value={value}
@@ -399,6 +403,7 @@ const DateEditor = ({ fieldId, value, onChange }) => {
 };
 
 const DropdownEditor = ({ fieldId, options, onAdd, onRemove }) => {
+    const locale = useLocale();
     const [selected, setSelected] = React.useState('');
     React.useEffect(() => {
         const hasSelected = options.some((opt) => opt.id === selected);
@@ -409,7 +414,7 @@ const DropdownEditor = ({ fieldId, options, onAdd, onRemove }) => {
 
     return (
         <div>
-            <StyledParagraph>{fieldId}: </StyledParagraph>
+            <StyledParagraph>{locale.member[fieldId]}: </StyledParagraph>
             <StyledDropdown
                 value={selected}
                 onChange={(e) => {
@@ -456,11 +461,12 @@ const DropdownEditor = ({ fieldId, options, onAdd, onRemove }) => {
 };
 
 const GenderEditor = ({ value, onChange }) => {
+    const locale = useLocale();
     const [selected, setSelected] = React.useState(value);
 
     return (
         <div>
-            <StyledParagraph>Género: </StyledParagraph>
+            <StyledParagraph>{locale.member.gender}</StyledParagraph>
             <StyledDropdown
                 value={selected}
                 onChange={(e) => {
@@ -534,6 +540,7 @@ function getDefaultMember() {
         spouses: [],
         children: [],
         siblings: [],
+        profession: '',
         biography: '',
         events: [],
     };

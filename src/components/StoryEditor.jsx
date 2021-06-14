@@ -5,6 +5,7 @@ import Page from './commons/Page.jsx';
 import Button from './commons/Button.jsx';
 import ModalOverlay from './commons/ModalOverlay.jsx';
 import DropZone from './commons/DropZone.jsx';
+import { useLocale } from './hooks/useLocale';
 
 import { downloadJson } from '../utils';
 import stories from '../assets/stories';
@@ -239,9 +240,10 @@ const ImagesModalSelector = ({ onConfirm }) => {
 };
 
 const TextAreaEditor = ({ fieldId, value, onChange, big }) => {
+    const locale = useLocale();
     return (
         <div>
-            <StyledParagraph>{fieldId}: </StyledParagraph>
+            <StyledParagraph>{locale.story[fieldId]}: </StyledParagraph>
             <StyledTextArea
                 big={big}
                 value={value}
@@ -263,9 +265,10 @@ const TextAreaEditor = ({ fieldId, value, onChange, big }) => {
 };
 
 const DateEditor = ({ fieldId, value, onChange }) => {
+    const locale = useLocale();
     return (
         <div>
-            <StyledParagraph>{fieldId}: </StyledParagraph>
+            <StyledParagraph>{locale.story[fieldId]}: </StyledParagraph>
             <StyledInput
                 type="date"
                 value={value}
@@ -283,6 +286,7 @@ const DateEditor = ({ fieldId, value, onChange }) => {
 };
 
 const DropdownEditor = ({ fieldId, options, onAdd, onRemove }) => {
+    const locale = useLocale();
     const [selected, setSelected] = React.useState('');
     React.useEffect(() => {
         const hasSelected = options.some((opt) => opt.id === selected);
@@ -293,7 +297,7 @@ const DropdownEditor = ({ fieldId, options, onAdd, onRemove }) => {
 
     return (
         <div>
-            <StyledParagraph>{fieldId}: </StyledParagraph>
+            <StyledParagraph>{locale.story[fieldId]}: </StyledParagraph>
             <StyledDropdown
                 value={selected}
                 onChange={(e) => {

@@ -1,0 +1,32 @@
+{
+    "genders": {
+        "male": "Masculino",
+        "female": "Feminino"
+    },
+    "member": {
+        "children": "Filhos",
+        "siblings": "Irmãos",
+        "events": "Eventos importantes",
+        "spouses": "Casamentos",
+        "parents": "Pais",
+        "profession": "Profissão",
+        "birth": "Data de nascimento",
+        "death": "Data de Óbito",
+        "gender": "Género",
+        "name": "Nome",
+        "biography": "Biografia",
+        "types": {
+            "blood": "Sangue",
+            "married": "Casado",
+            "divorced": "Divorciado",
+            "adopted": "Adotado",
+            "half": "Meio-irmão"
+        }
+    },
+    "story": {
+        "title": "Título",
+        "year": "Ano",
+        "description": "Descrição",
+        "images": "Imagens"
+    }
+}

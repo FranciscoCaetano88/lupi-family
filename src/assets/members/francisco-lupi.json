@@ -1,1 +1,17 @@
-{"id":"b52019c0-cd36-11eb-aa0e-8d2d00a70c33","death":"","children":[],"siblings":[],"events":[],"gender":"male","parents":[{"id":"db8b33a0-cc38-11eb-ab35-b9b89d363c7a","type":"blood"},{"id":"d32f0100-cc38-11eb-b638-a52f80d78640","type":"blood"}],"spouses":[],"name":"Francisco Lupi","birth":"","biography":"Francisco Lupi nasceu em Perugia, então cidade do Estado Pontifício. Ao chegar a Lisboa, em Dezembro de 1797, visitou seu pai, que estava alojado em casa dos Marqueses do Louriçal, onde também habitava nessa altura Mgr. Pacca, Núncio Apostólico em Portugal, através do qual conheceu Mgr. Caleppi, que veio a suceder aquele, em 1802, no cargo de Núncio. Em 1806, vagou na Nunciatura o cargo de “escrivão dos breves”, tendo Mgr. Caleppi convidado Francisco Lupi para o exercer.\n\nA partir deste ano, e apenas com um breve intervalo em 1818, Francisco Lupi trabalhou na Nunciatura, desempenhando na altura da sua morte o ofício vitalício e hereditário de “Registatore delle Bolle e Brevi di Nunziatura”  .\n\nCasou com Maria Soriana do Carmo, de quem teve seis filhos: José Maria Melchiades (n.1809), Joaquim José do Nascimento (n.1810), Carlota, João Evangelista, Miguel Angelo (n.1826) e Maria José."}
+{
+    "id": "b52019c0-cd36-11eb-aa0e-8d2d00a70c33",
+    "death": "",
+    "children": [],
+    "siblings": [],
+    "events": [],
+    "profession": "",
+    "gender": "male",
+    "parents": [
+        { "id": "db8b33a0-cc38-11eb-ab35-b9b89d363c7a", "type": "blood" },
+        { "id": "d32f0100-cc38-11eb-b638-a52f80d78640", "type": "blood" }
+    ],
+    "spouses": [],
+    "name": "Francisco Lupi",
+    "birth": "",
+    "biography": "Francisco Lupi nasceu em Perugia, então cidade do Estado Pontifício. Ao chegar a Lisboa, em Dezembro de 1797, visitou seu pai, que estava alojado em casa dos Marqueses do Louriçal, onde também habitava nessa altura Mgr. Pacca, Núncio Apostólico em Portugal, através do qual conheceu Mgr. Caleppi, que veio a suceder aquele, em 1802, no cargo de Núncio. Em 1806, vagou na Nunciatura o cargo de “escrivão dos breves”, tendo Mgr. Caleppi convidado Francisco Lupi para o exercer.\n\nA partir deste ano, e apenas com um breve intervalo em 1818, Francisco Lupi trabalhou na Nunciatura, desempenhando na altura da sua morte o ofício vitalício e hereditário de “Registatore delle Bolle e Brevi di Nunziatura”  .\n\nCasou com Maria Soriana do Carmo, de quem teve seis filhos: José Maria Melchiades (n.1809), Joaquim José do Nascimento (n.1810), Carlota, João Evangelista, Miguel Angelo (n.1826) e Maria José."
+}

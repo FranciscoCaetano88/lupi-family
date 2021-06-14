@@ -77,8 +77,17 @@ const StyledRightTd = Styled.td`
 `;
 
 const LeftSection = ({ member, history }) => {
-    const { id, name, birth, death, parents, spouses, children, siblings } =
-        member;
+    const {
+        id,
+        name,
+        birth,
+        death,
+        parents,
+        spouses,
+        children,
+        siblings,
+        profession,
+    } = member;
 
     return (
         <StyledLeftSection>
@@ -118,6 +127,10 @@ const LeftSection = ({ member, history }) => {
                         <StyledRightTd>
                             {toSeparatedLinks(siblings, history)}
                         </StyledRightTd>
+                    </tr>
+                    <tr>
+                        <StyledLeftTd>Profissão</StyledLeftTd>
+                        <StyledRightTd>{profession}</StyledRightTd>
                     </tr>
                 </tbody>
             </table>

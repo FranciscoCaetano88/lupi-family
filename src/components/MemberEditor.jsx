@@ -149,6 +149,11 @@ const MemberEditor = ({ memberState = getDefaultMember() }) => {
                     onRemove={handleOnRemove}
                 />
                 <TextAreaEditor
+                    fieldId={'profession'}
+                    value={member.profession}
+                    onChange={handleFieldChange}
+                />
+                <TextAreaEditor
                     fieldId={'biography'}
                     value={member.biography}
                     onChange={handleFieldChange}

@@ -154,12 +154,13 @@ const MemberEditor = ({ memberState = getDefaultMember() }) => {
             </section>
             <ButtonSection>
                 <StyledDownUpLoadButton
-                    onClick={() =>
+                    onClick={() => {
                         downloadJson(
                             member,
                             member.name.toLowerCase().replace(/\s/g, '-')
-                        )
-                    }
+                        );
+                        location.reload();
+                    }}
                 >
                     DOWNLOAD .JSON
                 </StyledDownUpLoadButton>

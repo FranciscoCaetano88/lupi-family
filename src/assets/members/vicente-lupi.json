@@ -1,0 +1,16 @@
+{
+    "id": "65de5610-cd36-11eb-8609-43669e365197",
+    "death": "",
+    "children": [],
+    "siblings": [],
+    "events": [],
+    "name": "Vicente Lupi",
+    "birth": "1773",
+    "gender": "male",
+    "parents": [
+        { "id": "db8b33a0-cc38-11eb-ab35-b9b89d363c7a", "type": "blood" },
+        { "id": "d32f0100-cc38-11eb-b638-a52f80d78640", "type": "blood" }
+    ],
+    "spouses": [],
+    "biography": "Vicente Lupi, natural de Roma, onde nasceu em 1773, filho de Miguel Angelo Lupi e de Vicencia Lupi. Foi militar de profissão.\n\nEm 1791 embarcou em Lisboa com destino para Goa, na nau “N.ª Sr.ª da Conceição e Santo António”"
+}

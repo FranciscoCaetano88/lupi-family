@@ -107,6 +107,12 @@ const MemberEditor = ({ memberState = getDefaultMember() }) => {
             </section>
             <section>
                 <TextAreaEditor
+                    disabled={true}
+                    fieldId={'id'}
+                    value={member.id}
+                    onChange={() => {}}
+                />
+                <TextAreaEditor
                     fieldId={'name'}
                     value={member.name}
                     onChange={handleFieldChange}
@@ -201,7 +207,8 @@ const StyledEditDropdown = Styled(StyledDropdown)`
 `;
 
 const EditMember = ({ onEditClick }) => {
-    const [id, setId] = React.useState(members[0].id);
+    const sortedMembers = members.sort(sortAlphabetically);
+    const [id, setId] = React.useState(sortedMembers[0].id);
 
     return (
         <StyledEditMember>
@@ -216,7 +223,7 @@ const EditMember = ({ onEditClick }) => {
                     setId(target.value);
                 }}
             >
-                {members.map((m, index) => (
+                {sortedMembers.map((m, index) => (
                     <option key={index} value={m.id}>
                         {m.name}
                     </option>
@@ -356,12 +363,15 @@ const EventModalSelector = ({ onConfirm }) => {
     );
 };
 
-const TextAreaEditor = ({ fieldId, value, onChange, big }) => {
+const TextAreaEditor = ({ fieldId, value, onChange, big, ...props }) => {
     const locale = useLocale();
     return (
         <div>
-            <StyledParagraph>{locale.member[fieldId]}: </StyledParagraph>
+            <StyledParagraph>
+                {locale.member[fieldId] || fieldId}
+            </StyledParagraph>
             <StyledTextArea
+                {...props}
                 big={big}
                 value={value}
                 onChange={(e) => {
@@ -544,4 +554,17 @@ function getDefaultMember() {
         biography: '',
         events: [],
     };
+}
+
+// TODO: move to utils
+function sortAlphabetically(a, b) {
+    if (a.name < b.name) {
+        return -1;
+    }
+
+    if (a.name > b.name) {
+        return 1;
+    }
+
+    return 0;
 }

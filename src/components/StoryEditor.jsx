@@ -102,6 +102,12 @@ const MemberEditor = ({ storyState = getDefaultStory() }) => {
             </section>
             <section>
                 <TextAreaEditor
+                    disabled={true}
+                    fieldId={'id'}
+                    value={story.id}
+                    onChange={() => {}}
+                />
+                <TextAreaEditor
                     fieldId={'title'}
                     value={story.title}
                     onChange={handleFieldChange}
@@ -158,7 +164,8 @@ const StyledEditDropdown = Styled(StyledDropdown)`
 `;
 
 const EditStory = ({ onEditClick }) => {
-    const [id, setId] = React.useState(stories[0].id);
+    const sortedStories = stories.sort(sortAlphabetically);
+    const [id, setId] = React.useState(sortedStories[0].id);
 
     return (
         <StyledEditStory>
@@ -173,7 +180,7 @@ const EditStory = ({ onEditClick }) => {
                     setId(target.value);
                 }}
             >
-                {stories.map((m, index) => (
+                {sortedStories.map((m, index) => (
                     <option key={index} value={m.id}>
                         {m.title}
                     </option>
@@ -239,12 +246,15 @@ const ImagesModalSelector = ({ onConfirm }) => {
     );
 };
 
-const TextAreaEditor = ({ fieldId, value, onChange, big }) => {
+const TextAreaEditor = ({ fieldId, value, onChange, big, ...props }) => {
     const locale = useLocale();
     return (
         <div>
-            <StyledParagraph>{locale.story[fieldId]}: </StyledParagraph>
+            <StyledParagraph>
+                {locale.story[fieldId] || fieldId}:{' '}
+            </StyledParagraph>
             <StyledTextArea
+                {...props}
                 big={big}
                 value={value}
                 onChange={(e) => {
@@ -393,4 +403,17 @@ function getDefaultStory() {
         description: '',
         images: [],
     };
+}
+
+// TODO: move to utils
+function sortAlphabetically(a, b) {
+    if (a.name < b.name) {
+        return -1;
+    }
+
+    if (a.name > b.name) {
+        return 1;
+    }
+
+    return 0;
 }

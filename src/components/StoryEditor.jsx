@@ -4,10 +4,14 @@ import { React, Styled } from '../react';
 import Page from './commons/Page.jsx';
 import Button from './commons/Button.jsx';
 import ModalOverlay from './commons/ModalOverlay.jsx';
-import DropZone from './commons/DropZone.jsx';
+import TextAreaEditor from './commons/TextAreaEditor.jsx';
+import DateEditor from './commons/DateEditor.jsx';
+import DropdownEditor from './commons/DropdownEditor.jsx';
+import EditSelector from './commons/EditSelector.jsx';
+import DownloadUploadButtons from './commons/DownloadUploadButtons.jsx';
 import { useLocale } from './hooks/useLocale';
+import { getDefaultStory } from '../state';
 
-import { downloadJson } from '../utils';
 import stories from '../assets/stories';
 
 const StyledButton = Styled(Button)`
@@ -26,19 +30,6 @@ const StyledButton = Styled(Button)`
     }
 `;
 
-const StyledDownUpLoadButton = Styled(StyledButton)`
-    margin-left: 0 !important;
-`;
-
-const StyledInput = Styled.input`
-    width: 100%;
-
-    padding: 1em;
-    margin-bottom: 1em;
-    
-    font: 400 1em Arial;
-`;
-
 const StyledTextArea = Styled.textarea`
     width: 100%;
 
@@ -55,23 +46,8 @@ white-space: pre-wrap;`
     resize: none;
 `;
 
-const StyledParagraph = Styled.p`
-    margin-bottom: 0 !important;
-    margin-top: 1em;
-`;
-
-const StyledDropdown = Styled.select`
-    padding: 1em;
-    margin-bottom: 1em;
-
-    font: 400 1em Arial;
-`;
-
-const ButtonSection = Styled.section`
-    display: flex;
-`;
-
 const MemberEditor = ({ storyState = getDefaultStory() }) => {
+    const locale = useLocale();
     const [story, setStory] = React.useState(storyState);
     const [modal, setModal] = React.useState(false);
     const [operation, setOperation] = React.useState(null);
@@ -98,102 +74,47 @@ const MemberEditor = ({ storyState = getDefaultStory() }) => {
                 </ModalOverlay>
             )}
             <section>
-                <EditStory onEditClick={onEditClick} />
+                <EditSelector data={[...stories]} onEditClick={onEditClick} />
             </section>
             <section>
                 <TextAreaEditor
-                    disabled={true}
-                    fieldId={'id'}
+                    title={locale.id}
                     value={story.id}
+                    disabled={true}
                     onChange={() => {}}
                 />
                 <TextAreaEditor
-                    fieldId={'title'}
+                    title={locale.story.title}
                     value={story.title}
-                    onChange={handleFieldChange}
+                    onChange={handleFieldChange('title')}
                 />
                 <DateEditor
-                    fieldId={'year'}
+                    title={locale.story.year}
                     value={story.year}
-                    onChange={handleFieldChange}
+                    onChange={handleFieldChange('year')}
                 />
                 <TextAreaEditor
-                    fieldId={'description'}
+                    title={locale.story.description}
                     value={story.description}
-                    onChange={handleFieldChange}
+                    onChange={handleFieldChange('description')}
                     big={true}
                 />
                 <DropdownEditor
-                    fieldId={'images'}
+                    title={locale.story.images}
                     options={story.images}
-                    onAdd={handleOnAdd}
-                    onRemove={handleOnRemove}
+                    onAdd={handleOnAdd('images')}
+                    onRemove={handleOnRemove('images')}
                 />
             </section>
-            <ButtonSection>
-                <StyledDownUpLoadButton
-                    onClick={() => {
-                        downloadJson(
-                            story,
-                            story.title.toLowerCase().replace(/\s/g, '-')
-                        );
-                        location.reload();
-                    }}
-                >
-                    DOWNLOAD .JSON
-                </StyledDownUpLoadButton>
-                <DropZone onClick={(json) => setStory(json)}>
-                    <StyledDownUpLoadButton onClick={() => {}}>
-                        IMPORTAR .JSON
-                    </StyledDownUpLoadButton>
-                </DropZone>
-            </ButtonSection>
+            <DownloadUploadButtons
+                data={story}
+                onDrop={(json) => setStory(json)}
+            />
         </Page>
     );
 };
 
 export default MemberEditor;
-
-const StyledEditStory = Styled.div`
-    display: flex;
-    justify-content: flex-end;
-`;
-
-const StyledEditDropdown = Styled(StyledDropdown)`
-    margin-bottom: 0;
-`;
-
-const EditStory = ({ onEditClick }) => {
-    const sortedStories = stories.sort(sortAlphabetically);
-    const [id, setId] = React.useState(sortedStories[0].id);
-
-    return (
-        <StyledEditStory>
-            <StyledEditDropdown
-                value={id}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    setId(target.value);
-                }}
-            >
-                {sortedStories.map((m, index) => (
-                    <option key={index} value={m.id}>
-                        {m.title}
-                    </option>
-                ))}
-            </StyledEditDropdown>
-            <StyledButton
-                onClick={() => onEditClick(stories.find((m) => m.id === id))}
-            >
-                Editar
-            </StyledButton>
-        </StyledEditStory>
-    );
-};
 
 const StyledModalContainer = Styled.div`
     display: flex;
@@ -246,121 +167,15 @@ const ImagesModalSelector = ({ onConfirm }) => {
     );
 };
 
-const TextAreaEditor = ({ fieldId, value, onChange, big, ...props }) => {
-    const locale = useLocale();
-    return (
-        <div>
-            <StyledParagraph>
-                {locale.story[fieldId] || fieldId}:{' '}
-            </StyledParagraph>
-            <StyledTextArea
-                {...props}
-                big={big}
-                value={value}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    if (!big && e.nativeEvent.inputType === 'insertLineBreak') {
-                        return;
-                    }
-
-                    onChange(fieldId, target.value);
-                }}
-            />
-        </div>
-    );
-};
-
-const DateEditor = ({ fieldId, value, onChange }) => {
-    const locale = useLocale();
-    return (
-        <div>
-            <StyledParagraph>{locale.story[fieldId]}: </StyledParagraph>
-            <StyledInput
-                type="date"
-                value={value}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    onChange(fieldId, target.value);
-                }}
-            />
-        </div>
-    );
-};
-
-const DropdownEditor = ({ fieldId, options, onAdd, onRemove }) => {
-    const locale = useLocale();
-    const [selected, setSelected] = React.useState('');
-    React.useEffect(() => {
-        const hasSelected = options.some((opt) => opt.id === selected);
-        if (!hasSelected && options.length) {
-            setSelected(options[0].id);
-        }
-    }, [setSelected, selected, options]);
-
-    return (
-        <div>
-            <StyledParagraph>{locale.story[fieldId]}: </StyledParagraph>
-            <StyledDropdown
-                value={selected}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    setSelected(target.value);
-                }}
-            >
-                {options.map((opt, index) => {
-                    return (
-                        <option key={index} value={opt.id}>
-                            {opt.name}
-                        </option>
-                    );
-                })}
-            </StyledDropdown>
-            <StyledButton
-                onClick={() => {
-                    onAdd(fieldId);
-                }}
-            >
-                Adicionar
-            </StyledButton>
-            <StyledButton
-                onClick={() => {
-                    const hasOption = options.some(
-                        (opt) => opt.id === selected
-                    );
-                    if (!hasOption) {
-                        return;
-                    }
-
-                    onRemove(fieldId, selected);
-                }}
-            >
-                Remover
-            </StyledButton>
-        </div>
-    );
-};
-
 function useHandlers({ story, setStory, operation, setOperation, setModal }) {
-    const handleFieldChange = (fieldId, value) => {
+    const handleFieldChange = (fieldId) => (value) => {
         setStory({ ...story, [fieldId]: value });
     };
-    const handleOnAdd = (fieldId) => {
+    const handleOnAdd = (fieldId) => () => {
         setOperation(fieldId);
         setModal(true);
     };
-    const handleOnRemove = (fieldId, value) => {
+    const handleOnRemove = (fieldId) => (value) => {
         setStory({
             ...story,
             [fieldId]: story[fieldId].filter((p) => p.id !== value),
@@ -393,27 +208,4 @@ function useHandlers({ story, setStory, operation, setOperation, setModal }) {
         onModalConfirm,
         onEditClick,
     };
-}
-
-function getDefaultStory() {
-    return {
-        id: uuid(),
-        title: '',
-        year: '',
-        description: '',
-        images: [],
-    };
-}
-
-// TODO: move to utils
-function sortAlphabetically(a, b) {
-    if (a.name < b.name) {
-        return -1;
-    }
-
-    if (a.name > b.name) {
-        return 1;
-    }
-
-    return 0;
 }

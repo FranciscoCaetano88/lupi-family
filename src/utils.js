@@ -27,3 +27,15 @@ export function downloadJson(json, name) {
 
     saveAs(blob, name);
 }
+
+export function sortAlphabetically(a, b) {
+    if (a.name < b.name) {
+        return -1;
+    }
+
+    if (a.name > b.name) {
+        return 1;
+    }
+
+    return 0;
+}

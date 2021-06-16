@@ -4,12 +4,17 @@ import { React, Styled } from '../react';
 import Page from './commons/Page.jsx';
 import Button from './commons/Button.jsx';
 import ModalOverlay from './commons/ModalOverlay.jsx';
-import DropZone from './commons/DropZone.jsx';
+import TextAreaEditor from './commons/TextAreaEditor.jsx';
+import DateEditor from './commons/DateEditor.jsx';
+import DropdownEditor from './commons/DropdownEditor.jsx';
+import GenderEditor from './commons/GenderEditor.jsx';
+import EditSelector from './commons/EditSelector.jsx';
+import DownloadUploadButtons from './commons/DownloadUploadButtons.jsx';
 import { useLocale } from './hooks/useLocale';
+import { getDefaultMember } from '../state';
 
 import members from '../assets/members';
-import { downloadJson } from '../utils';
-import { GENDER, MEMBER_TYPES } from '../enums';
+import { MEMBER_TYPES } from '../enums';
 
 const StyledButton = Styled(Button)`
     height: fit-content;
@@ -25,10 +30,6 @@ const StyledButton = Styled(Button)`
     &:active {
         background-color: rgba(60, 100, 120, 0.6);
     }
-`;
-
-const StyledDownUpLoadButton = Styled(StyledButton)`
-    margin-left: 0 !important;
 `;
 
 const StyledInput = Styled.input`
@@ -56,11 +57,6 @@ white-space: pre-wrap;`
     resize: none;
 `;
 
-const StyledParagraph = Styled.p`
-    margin-bottom: 0 !important;
-    margin-top: 1em;
-`;
-
 const StyledDropdown = Styled.select`
     padding: 1em;
     margin-bottom: 1em;
@@ -68,11 +64,8 @@ const StyledDropdown = Styled.select`
     font: 400 1em Arial;
 `;
 
-const ButtonSection = Styled.section`
-    display: flex;
-`;
-
 const MemberEditor = ({ memberState = getDefaultMember() }) => {
+    const locale = useLocale();
     const [member, setMember] = React.useState(memberState);
     const [modal, setModal] = React.useState(false);
     const [operation, setOperation] = React.useState(null);
@@ -103,140 +96,86 @@ const MemberEditor = ({ memberState = getDefaultMember() }) => {
                 </ModalOverlay>
             )}
             <section>
-                <EditMember onEditClick={onEditClick} />
+                <EditSelector data={[...members]} onEditClick={onEditClick} />
             </section>
             <section>
                 <TextAreaEditor
-                    disabled={true}
-                    fieldId={'id'}
+                    title={locale.id}
                     value={member.id}
+                    disabled={true}
                     onChange={() => {}}
                 />
                 <TextAreaEditor
-                    fieldId={'name'}
+                    title={locale.member.name}
                     value={member.name}
-                    onChange={handleFieldChange}
+                    onChange={handleFieldChange('name')}
                 />
                 <DateEditor
-                    fieldId={'birth'}
+                    title={locale.member.birth}
                     value={member.birth}
-                    onChange={handleFieldChange}
+                    onChange={handleFieldChange('birth')}
                 />
                 <DateEditor
-                    fieldId={'death'}
+                    title={locale.member.death}
                     value={member.death}
-                    onChange={handleFieldChange}
+                    onChange={handleFieldChange('death')}
                 />
                 <GenderEditor
+                    title={locale.member.gender}
                     value={member.gender}
-                    onChange={handleFieldChange}
+                    onChange={handleFieldChange('gender')}
                 />
                 <DropdownEditor
-                    fieldId={'parents'}
+                    title={locale.member.parents}
                     options={member.parents}
-                    onAdd={handleOnAdd}
-                    onRemove={handleOnRemove}
+                    onAdd={handleOnAdd('parents')}
+                    onRemove={handleOnRemove('parents')}
                 />
                 <DropdownEditor
-                    fieldId={'spouses'}
+                    title={locale.member.spouses}
                     options={member.spouses}
-                    onAdd={handleOnAdd}
-                    onRemove={handleOnRemove}
+                    onAdd={handleOnAdd('spouses')}
+                    onRemove={handleOnRemove('spouses')}
                 />
                 <DropdownEditor
-                    fieldId={'children'}
+                    title={locale.member.children}
                     options={member.children}
-                    onAdd={handleOnAdd}
-                    onRemove={handleOnRemove}
+                    onAdd={handleOnAdd('children')}
+                    onRemove={handleOnRemove('children')}
                 />
                 <DropdownEditor
-                    fieldId={'siblings'}
+                    title={locale.member.siblings}
                     options={member.siblings}
-                    onAdd={handleOnAdd}
-                    onRemove={handleOnRemove}
+                    onAdd={handleOnAdd('siblings')}
+                    onRemove={handleOnRemove('siblings')}
                 />
                 <TextAreaEditor
-                    fieldId={'profession'}
+                    title={locale.member.profession}
                     value={member.profession}
-                    onChange={handleFieldChange}
+                    onChange={handleFieldChange('profession')}
                 />
                 <TextAreaEditor
-                    fieldId={'biography'}
+                    title={locale.member.biography}
                     value={member.biography}
-                    onChange={handleFieldChange}
+                    onChange={handleFieldChange('biography')}
                     big={true}
                 />
                 <DropdownEditor
-                    fieldId={'events'}
+                    title={locale.member.events}
                     options={member.events}
-                    onAdd={handleOnAdd}
-                    onRemove={handleOnRemove}
+                    onAdd={handleOnAdd('events')}
+                    onRemove={handleOnRemove('events')}
                 />
             </section>
-            <ButtonSection>
-                <StyledDownUpLoadButton
-                    onClick={() => {
-                        downloadJson(
-                            member,
-                            member.name.toLowerCase().replace(/\s/g, '-')
-                        );
-                        location.reload();
-                    }}
-                >
-                    DOWNLOAD .JSON
-                </StyledDownUpLoadButton>
-                <DropZone onClick={(json) => setMember(json)}>
-                    <StyledDownUpLoadButton onClick={() => {}}>
-                        IMPORTAR .JSON
-                    </StyledDownUpLoadButton>
-                </DropZone>
-            </ButtonSection>
+            <DownloadUploadButtons
+                data={member}
+                onDrop={(json) => setMember(json)}
+            />
         </Page>
     );
 };
 
 export default MemberEditor;
-
-const StyledEditMember = Styled.div`
-    display: flex;
-    justify-content: flex-end;
-`;
-
-const StyledEditDropdown = Styled(StyledDropdown)`
-    margin-bottom: 0;
-`;
-
-const EditMember = ({ onEditClick }) => {
-    const sortedMembers = members.sort(sortAlphabetically);
-    const [id, setId] = React.useState(sortedMembers[0].id);
-
-    return (
-        <StyledEditMember>
-            <StyledEditDropdown
-                value={id}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    setId(target.value);
-                }}
-            >
-                {sortedMembers.map((m, index) => (
-                    <option key={index} value={m.id}>
-                        {m.name}
-                    </option>
-                ))}
-            </StyledEditDropdown>
-            <StyledButton
-                onClick={() => onEditClick(members.find((m) => m.id === id))}
-            >
-                Editar
-            </StyledButton>
-        </StyledEditMember>
-    );
-};
 
 const StyledModalContainer = Styled.div`
     display: flex;
@@ -363,148 +302,15 @@ const EventModalSelector = ({ onConfirm }) => {
     );
 };
 
-const TextAreaEditor = ({ fieldId, value, onChange, big, ...props }) => {
-    const locale = useLocale();
-    return (
-        <div>
-            <StyledParagraph>
-                {locale.member[fieldId] || fieldId}
-            </StyledParagraph>
-            <StyledTextArea
-                {...props}
-                big={big}
-                value={value}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    if (!big && e.nativeEvent.inputType === 'insertLineBreak') {
-                        return;
-                    }
-
-                    onChange(fieldId, target.value);
-                }}
-            />
-        </div>
-    );
-};
-
-const DateEditor = ({ fieldId, value, onChange }) => {
-    const locale = useLocale();
-    return (
-        <div>
-            <StyledParagraph>{locale.member[fieldId]}: </StyledParagraph>
-            <StyledInput
-                type="date"
-                value={value}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    onChange(fieldId, target.value);
-                }}
-            />
-        </div>
-    );
-};
-
-const DropdownEditor = ({ fieldId, options, onAdd, onRemove }) => {
-    const locale = useLocale();
-    const [selected, setSelected] = React.useState('');
-    React.useEffect(() => {
-        const hasSelected = options.some((opt) => opt.id === selected);
-        if (!hasSelected && options.length) {
-            setSelected(options[0].id);
-        }
-    }, [setSelected, selected, options]);
-
-    return (
-        <div>
-            <StyledParagraph>{locale.member[fieldId]}: </StyledParagraph>
-            <StyledDropdown
-                value={selected}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    setSelected(target.value);
-                }}
-            >
-                {options.map((opt, index) => {
-                    const member = members.find((memb) => memb.id === opt.id);
-                    return (
-                        <option key={index} value={opt.id}>
-                            {!member ? opt.name : member.name}
-                        </option>
-                    );
-                })}
-            </StyledDropdown>
-            <StyledButton
-                onClick={() => {
-                    onAdd(fieldId);
-                }}
-            >
-                Adicionar
-            </StyledButton>
-            <StyledButton
-                onClick={() => {
-                    const hasOption = options.some(
-                        (opt) => opt.id === selected
-                    );
-                    if (!hasOption) {
-                        return;
-                    }
-
-                    onRemove(fieldId, selected);
-                }}
-            >
-                Remover
-            </StyledButton>
-        </div>
-    );
-};
-
-const GenderEditor = ({ value, onChange }) => {
-    const locale = useLocale();
-    const [selected, setSelected] = React.useState(value);
-
-    return (
-        <div>
-            <StyledParagraph>{locale.member.gender}</StyledParagraph>
-            <StyledDropdown
-                value={selected}
-                onChange={(e) => {
-                    const { target } = e;
-                    if (!target) {
-                        return;
-                    }
-
-                    setSelected(target.value);
-                    onChange('gender', target.value);
-                }}
-            >
-                <option value="male">Masculino</option>
-                <option value="female">Feminino</option>
-            </StyledDropdown>
-        </div>
-    );
-};
-
 function useHandlers({ member, setMember, operation, setOperation, setModal }) {
-    const handleFieldChange = (fieldId, value) => {
+    const handleFieldChange = (fieldId) => (value) => {
         setMember({ ...member, [fieldId]: value });
     };
-    const handleOnAdd = (fieldId) => {
+    const handleOnAdd = (fieldId) => () => {
         setOperation(fieldId);
         setModal(true);
     };
-    const handleOnRemove = (fieldId, value) => {
+    const handleOnRemove = (fieldId) => (value) => {
         setMember({
             ...member,
             [fieldId]: member[fieldId].filter((p) => p.id !== value),
@@ -537,34 +343,4 @@ function useHandlers({ member, setMember, operation, setOperation, setModal }) {
         onModalConfirm,
         onEditClick,
     };
-}
-
-function getDefaultMember() {
-    return {
-        id: uuid(),
-        name: '',
-        gender: GENDER.male,
-        birth: '',
-        death: '',
-        parents: [],
-        spouses: [],
-        children: [],
-        siblings: [],
-        profession: '',
-        biography: '',
-        events: [],
-    };
-}
-
-// TODO: move to utils
-function sortAlphabetically(a, b) {
-    if (a.name < b.name) {
-        return -1;
-    }
-
-    if (a.name > b.name) {
-        return 1;
-    }
-
-    return 0;
 }

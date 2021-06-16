@@ -8,7 +8,6 @@ import StoryEditor from './StoryEditor.jsx';
 import Stories from './Stories.jsx';
 import Story from './Story.jsx';
 
-import themes from './themes';
 import stories from '../assets/stories';
 import members from '../assets/members';
 
@@ -64,7 +63,7 @@ const StyledRoot = Styled.div`
     width: 100%;
     height: 100%;
 
-    font-family: ${themes.fonts.family.primary}, ${themes.fonts.family.secondary};
+    font-family: basic-sans, sans-serif;
     font-weight: 400;
     font-size: 0.8rem;
     line-height: 1.6;

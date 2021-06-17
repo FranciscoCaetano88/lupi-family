@@ -17,6 +17,10 @@ const GenderEditor = ({ value, title, onChange }) => {
     const locale = useLocale();
     const [selected, setSelected] = React.useState(value);
 
+    React.useEffect(() => {
+        setSelected(value);
+    }, [value]);
+
     return (
         <div>
             <StyledParagraph>{title}</StyledParagraph>
@@ -28,7 +32,6 @@ const GenderEditor = ({ value, title, onChange }) => {
                         return;
                     }
 
-                    setSelected(target.value);
                     onChange(target.value);
                 }}
             >

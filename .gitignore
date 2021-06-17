@@ -208,3 +208,6 @@ games/cypress/videos/
 games/cypress/screenshots/
 
 # End of https://www.gitignore.io/api/visualstudiocode,osx,node
+
+# Scripts
+scripts

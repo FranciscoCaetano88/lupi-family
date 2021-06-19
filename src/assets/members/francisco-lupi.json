@@ -1,16 +1,27 @@
 {
     "id": "b52019c0-cd36-11eb-aa0e-8d2d00a70c33",
     "death": "",
-    "children": [],
-    "siblings": [],
+    "children": [
+        { "id": "98f197b0-cd36-11eb-abe1-b7a8a2f3479b", "type": "blood" },
+        { "id": "a5af28a0-cd36-11eb-9cfe-2b9cdcb7c5a8", "type": "blood" },
+        { "id": "bc5d47d0-cd36-11eb-a586-37fae70d91f8", "type": "blood" },
+        { "id": "ae9831f0-cd36-11eb-8cbe-99f8ebb210ba", "type": "blood" },
+        { "id": "51d6f3c0-d0e2-11eb-9efc-9f6d1271feb8", "type": "blood" },
+        { "id": "00bcc690-d0e2-11eb-9dfb-1fd10aa36893", "type": "blood" }
+    ],
+    "siblings": [
+        { "id": "65de5610-cd36-11eb-8609-43669e365197", "type": "blood" }
+    ],
     "events": [],
-    "profession": "",
+    "profession": "Núncio",
     "gender": "male",
     "parents": [
         { "id": "db8b33a0-cc38-11eb-ab35-b9b89d363c7a", "type": "blood" },
-        { "id": "d32f0100-cc38-11eb-b638-a52f80d78640", "type": "blood" }
+        { "id": "6c7b4920-cd0d-11eb-adb6-7325d370ab94", "type": "blood" }
     ],
-    "spouses": [],
+    "spouses": [
+        { "id": "7f638a10-cd36-11eb-b92e-494dd0775b88", "type": "blood" }
+    ],
     "name": "Francisco Lupi",
     "birth": "",
     "biography": "Francisco Lupi nasceu em Perugia, então cidade do Estado Pontifício. Ao chegar a Lisboa, em Dezembro de 1797, visitou seu pai, que estava alojado em casa dos Marqueses do Louriçal, onde também habitava nessa altura Mgr. Pacca, Núncio Apostólico em Portugal, através do qual conheceu Mgr. Caleppi, que veio a suceder aquele, em 1802, no cargo de Núncio. Em 1806, vagou na Nunciatura o cargo de “escrivão dos breves”, tendo Mgr. Caleppi convidado Francisco Lupi para o exercer.\n\nA partir deste ano, e apenas com um breve intervalo em 1818, Francisco Lupi trabalhou na Nunciatura, desempenhando na altura da sua morte o ofício vitalício e hereditário de “Registatore delle Bolle e Brevi di Nunziatura”  .\n\nCasou com Maria Soriana do Carmo, de quem teve seis filhos: José Maria Melchiades (n.1809), Joaquim José do Nascimento (n.1810), Carlota, João Evangelista, Miguel Angelo (n.1826) e Maria José."

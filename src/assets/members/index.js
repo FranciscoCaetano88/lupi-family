@@ -19,15 +19,15 @@ import fernandoNogueiraDeAraújo from './fernando-nogueira-de-araújo.json';
 import franciscoLupi from './francisco-lupi.json';
 import fredericoLupiNogueira from './frederico-lupi-nogueira.json';
 import fredericoPintoBastoLupi from './frederico-pinto-basto-lupi.json';
-import joaquimJoseDoNascimentoLupi from './joaquim-josé-do-nascimento-lupi.json';
+import joaquimJoseDoNascimentoLupi from './joaquim-jose-do-nascimento-lupi.json';
 import joaquinaDosSantos from './joaquina-dos-santos.json';
 import jorgeLupi from './jorge-lupi.json';
 import joseLupi from './josé-lupi.json';
 import joseMariaDosSantos from './josé-maria-dos-santos.json';
-import joseMariaMelchiadesLupi from './josé-maria-melchiades-lupi.json';
+import joseMariaMelchiadesLupi from './jose-maria-melchiades-lupi.json';
 import joseSamuelLupi from './josé-samuel-lupi.json';
 import joaoCardosoMata from './joão-cardoso-mata.json';
-import joaoEvangelistaLupi from './joão-evangelista-lupi.json';
+import joaoEvangelistaLupi from './joao-evangelista-lupi.json';
 import joaoPauloFreire from './joão-paulo-freire.json';
 import judithLupiFreire from './judith-lupi-freire.json';
 import judithLupiNogueira from './judith-lupi-nogueira.json';
@@ -44,7 +44,7 @@ import mariaCandidaPires from './maria-cândida-pires.json';
 import mariaDeLourdesLupiFreire from './maria-de-lourdes-lupi-freire.json';
 import mariaDeLurdesPereira from './maria-de-lurdes-pereira.json';
 import mariaGertrudesRapousoDoCouto from './maria-gertrudes-rapouso-do-couto.json';
-import mariaInesDoCarmoLupi from './maria-inês-do-carmo-lupi.json';
+import mariaInesDoCarmoLupi from './maria-ines-do-carmo-lupi.json';
 import mariaInesLupiNogueira from './maria-inês-lupi-nogueira.json';
 import mariaJoseLupi from './maria-josé-lupi.json';
 import mariaJosePereiraLupi from './maria-josé-pereira-lupi.json';
@@ -67,7 +67,7 @@ import vicenteLupi from './vicente-lupi.json';
 import virginiaClara from './virgínia-clara.json';
 import octavioBandeiraMello from './octavio-bandeira-de-mello.json';
 import miguelAngeloLupiPintor from './miguel-angelo-lupi-pintor.json';
-import mariaJoseDaAnunciaçaoLupi from './maria-jose-da-anunciaçao-lupi.json';
+import mariaJoseDaAnunciaçaoLupi from './maria-jose-da-anunciacao-lupi.json';
 
 export default [
     miguelAngeloLupi,

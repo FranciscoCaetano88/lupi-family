@@ -1,14 +1,1 @@
-{
-    "id": "db8b33a0-cc38-11eb-ab35-b9b89d363c7a",
-    "children": [],
-    "siblings": [],
-    "events": [],
-    "spouses": [{ "id": "6c7b4920-cd0d-11eb-adb6-7325d370ab94", "type": "married" }],
-    "parents": [],
-    "profession": "",
-    "name": "Miguel Angelo Lupi",
-    "birth": "1826",
-    "gender": "male",
-    "death": "1883",
-    "biography": "Miguel Angelo Lupi estudou na Academia de Belas-Artes de Lisboa. Por não dispor de meios de fortuna foi obrigado a ganhar a vida desempenhando funções burocráticas na Imprensa Nacional e no Tribunal de Contas, com colocações em Angola e no Porto, com prejuízo da sua carreira como pintor. Só em 1860 foi reconhecido o seu talento, e o governo estabeleceu-lhe uma pensão para estudar em Itália (Roma). Foi posteriormente nomeado lente efectivo da Academia de Belas-Artes, na cadeira de pintura histórica. Morreu em Lisboa, em 1883, solteiro, mas tendo perfilhado dois filhos, Adelaide Angelo e Joaquim Fernando. Sabe-se que Adelaide Angelo casou com o Engº Artur Cohen, mas ignora-se se qualquer deles teve descendência. "
-}
+{"id":"db8b33a0-cc38-11eb-ab35-b9b89d363c7a","children":[{"id":"65de5610-cd36-11eb-8609-43669e365197","type":"blood"},{"id":"b52019c0-cd36-11eb-aa0e-8d2d00a70c33","type":"blood"}],"siblings":[],"events":[],"spouses":[{"id":"6c7b4920-cd0d-11eb-adb6-7325d370ab94","type":"married"}],"parents":[],"profession":"","name":"Miguel Angelo Lupi","birth":"","gender":"male","death":"","biography":""}

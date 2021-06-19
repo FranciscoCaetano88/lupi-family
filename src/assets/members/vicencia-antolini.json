@@ -1,16 +1,1 @@
-{
-    "id": "6c7b4920-cd0d-11eb-adb6-7325d370ab94",
-    "birth": "",
-    "death": "",
-    "parents": [],
-    "children": [],
-    "siblings": [],
-    "events": [],
-    "profession": "",
-    "name": "Vicencia Antolini ",
-    "gender": "female",
-    "spouses": [
-        { "id": "db8b33a0-cc38-11eb-ab35-b9b89d363c7a", "type": "married" }
-    ],
-    "biography": "Vicencia Antolini casada com Miguel Angelo Lupi teve dois filhos, Vicente Lupi e Francisco Lupi. "
-}
+{"id":"6c7b4920-cd0d-11eb-adb6-7325d370ab94","birth":"","death":"","parents":[],"children":[{"id":"b52019c0-cd36-11eb-aa0e-8d2d00a70c33","type":"blood"},{"id":"65de5610-cd36-11eb-8609-43669e365197","type":"blood"}],"siblings":[],"events":[],"profession":"","name":"Vicencia Antolini","gender":"female","spouses":[{"id":"db8b33a0-cc38-11eb-ab35-b9b89d363c7a","type":"married"}],"biography":"Vicencia Antolini casada com Miguel Angelo Lupi teve dois filhos, Vicente Lupi e Francisco Lupi. "}

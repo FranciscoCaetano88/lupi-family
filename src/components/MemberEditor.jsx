@@ -12,6 +12,7 @@ import EditSelector from './commons/EditSelector.jsx';
 import DownloadUploadButtons from './commons/DownloadUploadButtons.jsx';
 import { useLocale } from './hooks/useLocale';
 import { getDefaultMember } from '../state';
+import { sortAlphabetically } from '../utils';
 
 import members from '../assets/members';
 import { MEMBER_TYPES } from '../enums';
@@ -203,7 +204,7 @@ const MemberModalSelector = ({ onConfirm }) => {
                     setId(target.value);
                 }}
             >
-                {members.map((m, index) => (
+                {members.sort(sortAlphabetically).map((m, index) => (
                     <option key={index} value={m.id}>
                         {m.name}
                     </option>

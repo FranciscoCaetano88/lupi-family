@@ -66,6 +66,8 @@ import vicenciaAntolini from './vicencia-antolini.json';
 import vicenteLupi from './vicente-lupi.json';
 import virginiaClara from './virgínia-clara.json';
 import octavioBandeiraMello from './octavio-bandeira-de-mello.json';
+import miguelAngeloLupiPintor from './miguel-angelo-lupi-pintor.json';
+import mariaJoseDaAnunciaçaoLupi from './maria-jose-da-anunciaçao-lupi.json';
 
 export default [
     miguelAngeloLupi,
@@ -136,4 +138,6 @@ export default [
     vicenteLupi,
     virginiaClara,
     octavioBandeiraMello,
+    miguelAngeloLupiPintor,
+    mariaJoseDaAnunciaçaoLupi,
 ];

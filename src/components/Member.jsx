@@ -91,46 +91,46 @@ const LeftSection = ({ member, history }) => {
 
     return (
         <StyledLeftSection>
-            <StyledPortrait src={portraits[id]} />
+            <StyledPortrait src={portraits[id] || portraits.default} />
             <h1>{name}</h1>
             <StyledSeparator />
             <table>
                 <tbody>
                     <tr>
                         <StyledLeftTd>Data Nascimento</StyledLeftTd>
-                        <StyledRightTd>{birth}</StyledRightTd>
+                        <StyledRightTd>{birth || '----'}</StyledRightTd>
                     </tr>
                     <tr>
                         <StyledLeftTd>Data Óbito</StyledLeftTd>
-                        <StyledRightTd>{death}</StyledRightTd>
+                        <StyledRightTd>{death || '----'}</StyledRightTd>
                     </tr>
                     <tr>
                         <StyledLeftTd>Pais</StyledLeftTd>
                         <StyledRightTd>
-                            {toSeparatedLinks(parents, history)}
+                            {toSeparatedLinks(parents, history) || '----'}
                         </StyledRightTd>
                     </tr>
                     <tr>
                         <StyledLeftTd>Casamentos</StyledLeftTd>
                         <StyledRightTd>
-                            {toSeparatedLinks(spouses, history)}
+                            {toSeparatedLinks(spouses, history) || '----'}
                         </StyledRightTd>
                     </tr>
                     <tr>
                         <StyledLeftTd>Filhos</StyledLeftTd>
                         <StyledRightTd>
-                            {toSeparatedLinks(children, history)}
+                            {toSeparatedLinks(children, history) || '----'}
                         </StyledRightTd>
                     </tr>
                     <tr>
                         <StyledLeftTd>Irmãos</StyledLeftTd>
                         <StyledRightTd>
-                            {toSeparatedLinks(siblings, history)}
+                            {toSeparatedLinks(siblings, history) || '----'}
                         </StyledRightTd>
                     </tr>
                     <tr>
                         <StyledLeftTd>Profissão</StyledLeftTd>
-                        <StyledRightTd>{profession}</StyledRightTd>
+                        <StyledRightTd>{profession || '----'}</StyledRightTd>
                     </tr>
                 </tbody>
             </table>
@@ -201,29 +201,37 @@ const RightSection = ({ member, history }) => {
 
     return (
         <StyledRightSection>
-            <h1>Biografia</h1>
-            <StyledParagraph>
-                {parseText(biography, splitter, transform(history))}
-            </StyledParagraph>
-            <h1>Eventos Importantes</h1>
-            <StyledTable>
-                <StyledRow>
-                    {events.map((e, index) => (
-                        <StyledColumn key={index}>
-                            <StyledColumnParagraph>
-                                {e.year}
-                            </StyledColumnParagraph>
-                            <StyledColumnParagraph>
-                                {parseText(
-                                    e.description,
-                                    splitter,
-                                    transform(history)
-                                )}
-                            </StyledColumnParagraph>
-                        </StyledColumn>
-                    ))}
-                </StyledRow>
-            </StyledTable>
+            {biography && (
+                <div>
+                    <h1>Biografia</h1>
+                    <StyledParagraph>
+                        {parseText(biography, splitter, transform(history))}
+                    </StyledParagraph>
+                </div>
+            )}
+            {!!events.length && (
+                <div>
+                    <h1>Eventos Importantes</h1>
+                    <StyledTable>
+                        <StyledRow>
+                            {events.map((e, index) => (
+                                <StyledColumn key={index}>
+                                    <StyledColumnParagraph>
+                                        {e.year}
+                                    </StyledColumnParagraph>
+                                    <StyledColumnParagraph>
+                                        {parseText(
+                                            e.description,
+                                            splitter,
+                                            transform(history)
+                                        )}
+                                    </StyledColumnParagraph>
+                                </StyledColumn>
+                            ))}
+                        </StyledRow>
+                    </StyledTable>
+                </div>
+            )}
         </StyledRightSection>
     );
 };

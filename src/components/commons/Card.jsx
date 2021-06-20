@@ -13,6 +13,7 @@ const StyledCard = Styled.div`
 
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 14px;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
 
     background-color: white;
 
@@ -39,10 +40,10 @@ const Card = ({ info, onClick, ...restProps }) => {
 
     return (
         <StyledCard onClick={onClick} {...restProps}>
-            <Portrait src={portraits[id]} marginBottom={5} />
+            <Portrait src={portraits[id] || portraits.default} />
             <StyledParagraph>
                 {name}
-                <br />({birth}-{death})
+                <br />({birth || '????'}-{death || '????'})
             </StyledParagraph>
         </StyledCard>
     );

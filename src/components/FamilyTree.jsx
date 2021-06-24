@@ -114,11 +114,12 @@ const FamilyTree = () => {
                                             newInfo,
                                         ]);
                                     }}
-                                    isRoot={
+                                    canBeRoot={
                                         info.id === rootId ||
                                         info.spouses.some(
                                             (s) => s.id === rootId
-                                        )
+                                        ) ||
+                                        !info.children.length
                                     }
                                 />
                             </StyledCardWrapper>
@@ -169,10 +170,12 @@ const StyledRootIcon = Styled.div`
     user-select: none;
 `;
 
-const MemberCard = ({ info, onCardClick, onRootClick, isRoot }) => {
+const MemberCard = ({ info, onCardClick, onRootClick, canBeRoot }) => {
     return (
         <StyledMemberCard>
-            {!isRoot && <StyledRootIcon onClick={() => onRootClick(info.id)} />}
+            {!canBeRoot && (
+                <StyledRootIcon onClick={() => onRootClick(info.id)} />
+            )}
             <Card info={info} onClick={onCardClick} />
         </StyledMemberCard>
     );

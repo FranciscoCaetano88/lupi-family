@@ -30,6 +30,7 @@ const StyledFamilyContainer = Styled.div`
     overflow: auto;
 
     cursor: ${(props) => props.cursor};
+    touch-action: none;
 `;
 
 const StyledFamilyTree = Styled.div`

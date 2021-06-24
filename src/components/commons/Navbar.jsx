@@ -17,7 +17,14 @@ const StyledButton = Styled(Button)``;
 const Navbar = () => {
     const history = useHistory();
     const goToPath = (path) => {
-        return () => history.push(path);
+        return () => {
+            if (history.location.pathname === path) {
+                window.location.reload();
+                return;
+            }
+
+            history.push(path);
+        };
     };
 
     return (

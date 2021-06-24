@@ -28,6 +28,8 @@ const StyledFamilyContainer = Styled.div`
     height: 100%;
 
     overflow: auto;
+
+    cursor: ${(props) => props.cursor};
 `;
 
 const StyledFamilyTree = Styled.div`
@@ -58,22 +60,33 @@ const StyledCardWrapper = Styled.div`
 const FamilyTree = () => {
     const history = useHistory();
     const ref = React.useRef(null);
-    const [scale, setScale] = React.useState(1);
+    const [scale, setScale] = React.useState(0.4);
+    const [rootId, setRootId] = React.useState(members[0].id);
+    const [nodes, setNodes] = React.useState(members);
 
+    const { onScreeDown, clicked } = useScrollHandlers(ref);
     const { scrollToCenter, zoomIn, zoomOut } = useToolkitHandlers(
         ref,
         scale,
         setScale
     );
 
+    React.useEffect(() => {
+        scrollToCenter();
+    }, [rootId]);
+
     return (
         <StyledSection>
             <Navbar />
-            <StyledFamilyContainer ref={ref}>
+            <StyledFamilyContainer
+                ref={ref}
+                onPointerDown={onScreeDown}
+                cursor={clicked ? 'grabbing' : 'grab'}
+            >
                 <StyledFamilyTree scale={scale}>
                     <ReactFamilyTree
-                        nodes={members}
-                        rootId={members[0].id}
+                        nodes={nodes}
+                        rootId={rootId}
                         width={WIDTH}
                         height={HEIGHT}
                         renderNode={(info) => (
@@ -82,10 +95,30 @@ const FamilyTree = () => {
                                 x={info.left * (WIDTH / 2)}
                                 y={info.top * (HEIGHT / 2)}
                             >
-                                <Card
+                                <MemberCard
                                     info={info}
-                                    onClick={() =>
+                                    onCardClick={() =>
                                         history.push(`family/${info.id}`)
+                                    }
+                                    onRootClick={(id) => {
+                                        setRootId(id);
+                                        const newInfo = {
+                                            ...info,
+                                            parents: [],
+                                            siblings: [],
+                                        };
+                                        setNodes([
+                                            ...nodes.filter(
+                                                (n) => n.id !== info.id
+                                            ),
+                                            newInfo,
+                                        ]);
+                                    }}
+                                    isRoot={
+                                        info.id === rootId ||
+                                        info.spouses.some(
+                                            (s) => s.id === rootId
+                                        )
                                     }
                                 />
                             </StyledCardWrapper>
@@ -103,6 +136,101 @@ const FamilyTree = () => {
 };
 
 export default FamilyTree;
+
+const StyledMemberCard = Styled.div`
+    position relative;
+`;
+
+const StyledRootIcon = Styled.div`
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    width: 1em;
+    height: 1em;
+
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+
+    background: white;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
+
+    &:hover {
+        transition: 0.2s ease-in;
+        box-shadow: 5px 5px 14px rgba(0, 0, 0, 0.4);
+    }
+
+    transition: all 0.2s ease-out;
+
+    cursor: pointer;
+
+    user-select: none;
+`;
+
+const MemberCard = ({ info, onCardClick, onRootClick, isRoot }) => {
+    return (
+        <StyledMemberCard>
+            {!isRoot && <StyledRootIcon onClick={() => onRootClick(info.id)} />}
+            <Card info={info} onClick={onCardClick} />
+        </StyledMemberCard>
+    );
+};
+
+function useScrollHandlers(ref) {
+    const [clicked, setClicked] = React.useState(false);
+    const [scrollPos, setScrollPos] = React.useState({
+        x: 0,
+        y: 0,
+        left: 0,
+        top: 0,
+    });
+
+    const setElementScroll = (e) => {
+        const { current } = ref;
+        if (!current) {
+            return;
+        }
+
+        if (!clicked) {
+            return;
+        }
+
+        const { x, y, top, left } = scrollPos;
+        // Scroll the element
+        current.scrollLeft = left - (e.clientX - x);
+        current.scrollTop = top - (e.clientY - y);
+    };
+    const disableClicked = () => {
+        setClicked(false);
+    };
+
+    React.useEffect(() => {
+        document.addEventListener('pointerup', disableClicked);
+        document.addEventListener('pointermove', setElementScroll);
+
+        return () => {
+            document.removeEventListener('pointerup', disableClicked);
+            document.removeEventListener('pointermove', setElementScroll);
+        };
+    }, [clicked]);
+
+    return {
+        onScreeDown: (e) => {
+            e.preventDefault();
+
+            setClicked(true);
+            setScrollPos({
+                x: e.pageX,
+                y: e.pageY,
+                left: e.currentTarget.scrollLeft,
+                top: e.currentTarget.scrollTop,
+            });
+        },
+        clicked,
+    };
+}
 
 function useToolkitHandlers(ref, scale, setScale) {
     const scrollToCenter = () => {
@@ -132,8 +260,6 @@ function useToolkitHandlers(ref, scale, setScale) {
 
         setScale(newScale);
     };
-
-    React.useEffect(scrollToCenter, [ref]);
 
     return {
         scrollToCenter,

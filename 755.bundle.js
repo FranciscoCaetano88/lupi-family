@@ -1,0 +1,2 @@
+(self.webpackChunklupi_family=self.webpackChunklupi_family||[]).push([[755],{755:(a,f,e)=>{"use strict";e.r(f),e.d(f,{default:()=>l});const l=e.p+"7f623feaea7f875a7afddf0a1a2e925b.png"}}]);
+//# sourceMappingURL=755.bundle.js.map

@@ -1,3 +1,3 @@
-import story1 from './story-1.json';
+import lupisInItaly from './os-lupi-em-itália.json';
 
-export default [story1];
+export default [lupisInItaly];

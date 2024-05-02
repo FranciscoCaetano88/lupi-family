@@ -12,6 +12,8 @@ const StyledOverlay = Styled.div`
     background-color: rgba(0, 0, 0, 0.6);
 
     overflow: hidden;
+
+    z-index: 20;
 `;
 
 const StyledModal = Styled.div`

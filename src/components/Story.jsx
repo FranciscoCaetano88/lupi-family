@@ -16,6 +16,8 @@ const StyledTitle = Styled.h1`
 `;
 
 const StyledParagraph = Styled.p`
+    white-space: pre-wrap;
+
     text-align: justify;
 `;
 
@@ -34,7 +36,7 @@ const Story = ({ story }) => {
         <Page>
             {fullScreen && (
                 <ModalOverlay onClose={() => setFullscreen(false)}>
-                    {<img src={fullScreen.url} alt={fullScreen.name} />}
+                    {<ImageCard image={fullScreen} />}
                 </ModalOverlay>
             )}
             <section>
@@ -67,8 +69,8 @@ const StyledImageCard = Styled.div`
     justify-content: center;
     flex-shrink: 0;
 
-    width: 8em;
-    height: 8em;
+    width: 100%;
+    height: 100%;
 
     cursor: pointer;
 
@@ -85,10 +87,16 @@ const StyledImageCard = Styled.div`
 
 const ImageCard = ({ image, onClick }) => {
     const { name, url } = image;
+    const [imageUrl, setImageUrl] = React.useState(null);
+    React.useEffect(() => {
+        import(`../assets/images/${url}`).then((data) => {
+            setImageUrl(data.default);
+        });
+    }, []);
 
     return (
-        <StyledImageCard onClick={() => onClick(image)}>
-            <img src={url} alt={name} />
+        <StyledImageCard onClick={() => onClick && onClick(image)}>
+            <img src={imageUrl} alt={name} />
         </StyledImageCard>
     );
 };

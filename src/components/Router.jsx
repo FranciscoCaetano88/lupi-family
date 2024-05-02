@@ -65,7 +65,7 @@ const StyledRoot = Styled.div`
 
     font-family: basic-sans, sans-serif;
     font-weight: 400;
-    font-size: 0.8rem;
+    font-size: 12px;
     line-height: 1.6;
 
     h1,
@@ -101,7 +101,7 @@ const StyledRoot = Styled.div`
     }
 
     @media (min-width: 41em) {
-            font-size: 1.7rem;
+            font-size: 16px;
     }
 `;
 

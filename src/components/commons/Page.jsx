@@ -15,7 +15,10 @@ const StyledPage = Styled.div`
     overflow: auto;
 `;
 
+// HACK: 65px magic number is the height of the navbar
 const StyledContainer = Styled.div`
+    margin-top: 65px;
+
     margin-inline: auto;
     width: min(90%, 70.5rem);
 `;
